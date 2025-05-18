@@ -10,6 +10,7 @@ export interface Article {
   imageUrl: string;
   summary?: string;
   author?: string;
+  isFeatured?: boolean;
 }
 
 export interface Category {

@@ -21,6 +21,7 @@ export const articles: Article[] = [
     category: 'technology',
     imageUrl: 'https://placehold.co/600x400.png',
     author: 'Jane Doe',
+    isFeatured: true,
   },
   {
     id: '2',
@@ -65,6 +66,7 @@ export const articles: Article[] = [
     category: 'technology',
     imageUrl: 'https://placehold.co/600x400.png',
     author: 'David Kim',
+    isFeatured: true,
   },
   {
     id: '6',

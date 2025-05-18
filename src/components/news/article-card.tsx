@@ -2,9 +2,10 @@ import Image from 'next/image';
 import type { Article } from '@/types';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, UserCircle, CalendarDays } from 'lucide-react';
+import { ExternalLink, UserCircle, CalendarDays, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { formatDistanceToNow } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface ArticleCardProps {
   article: Article;
@@ -15,9 +16,21 @@ export function ArticleCard({ article, onReadMore }: ArticleCardProps) {
   const timeAgo = formatDistanceToNow(new Date(article.publishedDate), { addSuffix: true });
 
   return (
-    <Card className="flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+    <Card className={cn(
+      "flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full",
+      article.isFeatured && "ring-2 ring-primary ring-offset-background ring-offset-2 shadow-2xl dark:ring-offset-card"
+    )}>
       <CardHeader className="p-0">
         <div className="relative h-48 w-full">
+          {article.isFeatured && (
+            <Badge
+              variant="default"
+              className="absolute top-3 right-3 z-10 text-xs px-2 py-1 shadow-md flex items-center gap-1"
+            >
+              <Star className="h-3 w-3" />
+              FEATURED
+            </Badge>
+          )}
           <Image
             src={article.imageUrl}
             alt={article.title}
