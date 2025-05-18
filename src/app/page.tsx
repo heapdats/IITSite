@@ -81,7 +81,7 @@ export default function NewsPage() {
           <div className="text-center py-10 text-muted-foreground">Loading news...</div>
         </main>
         <footer className="bg-card text-center p-4 text-sm text-muted-foreground border-t">
-          © {new Date().getFullYear()} NewsFlash. All rights reserved.
+          © {new Date().getFullYear()} IIT Pedia. All rights reserved.
         </footer>
       </div>
     );
@@ -134,7 +134,7 @@ export default function NewsPage() {
         onFeedAdd={handleFeedAdd}
       />
       <footer className="bg-card text-center p-4 text-sm text-muted-foreground border-t">
-        © {new Date().getFullYear()} NewsFlash. All rights reserved.
+        © {new Date().getFullYear()} IIT Pedia. All rights reserved.
       </footer>
     </div>
   );
