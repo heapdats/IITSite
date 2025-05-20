@@ -11,7 +11,11 @@ export function Header({ onAddFeedClick }: HeaderProps) {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Newspaper className="h-8 w-8 text-primary" />
-          <h1 className="text-2xl font-bold text-primary">IIT Pedia</h1>
+          <img
+            src="\images\nowiit.png"
+            alt="NOWIIT"
+            className="h-8 w-auto"
+          />
         </div>
         <Button onClick={onAddFeedClick} variant="outline" className="border-primary text-primary hover:bg-primary/10">
           <PlusCircle className="mr-2 h-4 w-4" />
