@@ -1,14 +1,5 @@
-import mysql from 'mysql2/promise';
 import type { Article, Category } from '@/types';
 import { Landmark, Cpu, Trophy, Briefcase, Globe, Cog } from 'lucide-react';
-
-const DB_CONFIG = {
-  host: 'localhost',
-  user: 'root',
-  password: '12345678',
-  database: 'my_website_db',
-};
-
 
 
 export const categories: Category[] = [
@@ -22,29 +13,226 @@ export const categories: Category[] = [
   { id: 'chs', name: 'Health Science', icon: Cog },
 ];
 
-async function getArticlesFromDB(): Promise<Article[]> {
-  const connection = await mysql.createConnection(DB_CONFIG);
 
-  const [rows] = await connection.execute(`
-    SELECT id, title, description AS content, image AS imageUrl, link AS sourceUrl, pubDate, tag AS category, sourceName, author, summary
-    FROM rss_posts
-    ORDER BY pubDate DESC
-    LIMIT 20
-  `);
-
-  await connection.end();
-
-  return (rows as any[]).map((row, index) => ({
-    id: row.id.toString(),
-    title: row.title,
-    content: row.content,
-    sourceName: row.sourceName,
-    sourceUrl: row.sourceUrl,
-    publishedDate: new Date(row.pubDate).toISOString(),
-    category: row.category,
-    imageUrl: row.imageUrl ?? '',
-    summary: row.summary ?? undefined,
-    author: row.author ?? undefined,
-    isFeatured: index < 3,  // Example: first 3 articles featured
-  }));
-}
+export const articles: Article[] = [
+  {
+    id: '6',
+    title: '𝗜𝗴𝗻𝗶𝘁𝗶𝗻𝗴 𝗦𝗽𝗼𝗿𝘁𝘆 𝗔𝗴𝗲𝗻𝘁𝘀: 𝗥𝗮𝗱𝗶𝗮𝗻𝘁 𝗠𝗼𝘁𝗶𝗼𝗻 𝗕𝗹𝗮𝘇𝗲𝘀 𝗔𝘁𝗵𝗹𝗲𝘁𝗶𝗰 𝗣𝗮𝘁𝗿𝗶𝗼𝘁 𝗜�...',
+    content: '𝗜𝗴𝗻𝗶𝘁𝗶𝗻𝗴 𝗦𝗽𝗼𝗿𝘁𝘆 𝗔𝗴𝗲𝗻𝘁𝘀: 𝗥𝗮𝗱𝗶𝗮𝗻𝘁 𝗠𝗼𝘁𝗶𝗼𝗻 𝗕𝗹𝗮𝘇𝗲𝘀 𝗔𝘁𝗵𝗹𝗲𝘁𝗶𝗰 𝗣𝗮𝘁𝗿𝗶𝗼𝘁 𝗜𝘀𝗸𝗼𝘀 Hudyaka 2025 MIDSA Science Camp enlivened its torches as Radiant Motion: Sports and Modified Laro ng Lahi went in full swing yesterday, March 20, 2025. Agents from Hudyaka\\\'s four classes showcased daunting teamwork, physical prowess, and straining skill in a blend of modern games and traditional Filipino pastimes in a creative and exciting format. Grids flew high as the CCS Fourth Floor became the strategic arena for Agent’s Gambit (Human Checkers), where the Cunning Controllers dominated with impressive coordination and foresight. However, checkmate did not mark the end of Hudyaka\\\'s action: the MSU-IIT Gymnasium buzzed with energy as three more events unfolded.  In a supersized game of skill, Breeze Beach Molly (Big Volleyball), the Intrepid Initiators outplayed their rivals with powerful serves and seamless teamwork to secure the championship title. Meanwhile, the Stalwart Sentinels leaped to victory in Ace the Jump (Chinese Garter), showing incredible balance and flexibility.  Further dominating the playing field, Cunning Controllers proved their versatility by also conquering Radiant Rush (Modified Sack Race), sealing their supremacy across multiple games and claiming the Radiant Motion Overall Championship In every jump, sprint, and strategy, the agents made their mark—securing the site, dominating the game, and staying radiant. Report by James Monteza  Proofread by Ashley Espina  Photos by Kian Garma #RadiantMotion #MIDSAProtocol #HudyakaSaMIDSA2025',
+    sourceName: 'Ad Infinitum',
+    sourceUrl: 'https://www.facebook.com/CSMAdInfinitum/posts/pfbid029wz9DVL3pd6v3yZcNmT794SbeAai8TAgzr6MPcBpvBr48cyxa9m2nmYpDEhefeJil',
+    publishedDate: '2025-05-21T13:00:49.000Z',
+    category: 'csm',
+    imageUrl: 'https://scontent-cdg4-3.xx.fbcdn.net/v/t39.30808-6/499679575_122192328008052313_705489847241081075_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=kEJo_u-OSHoQ7kNvwGGWS4n&_nc_oc=AdnRu0NcLFtVe1pgRMYum1Mg6UIlcodOlJTaGafjoKZD5h5yyTs5n16rxUqAbyxIots&_nc_zt=23&_nc_ht=scontent-cdg4-3.xx&_nc_gid=18irClikIX8jBSTFkK39FQ&oh=00_AfIcCDM3IwvZOVfC1mAcSs6NDxI9Ys5mUmAtVp8Qctf0YA&oe=6834FEB4',
+    isFeatured: true,
+  },
+  {
+    id: '7',
+    title: '𝗟𝗢𝗢𝗞: Empowered brushstrokes and enlightening lenses take center stage in the Gender and Development (GAD) Art Exhib...',
+    content: '𝗟𝗢𝗢𝗞: Empowered brushstrokes and enlightening lenses take center stage in the Gender and Development (GAD) Art Exhibit at the Nursing Skills Laboratory beside the CSM Complex. The exhibit also doubles as an art competition—channeling the expressive skills of IITians to defend gender equality in an ever-challenged world (Photos by Kian Garma). #ForeverOnward',
+    sourceName: 'Ad Infinitum',
+    sourceUrl: 'https://www.facebook.com/CSMAdInfinitum/posts/pfbid0799vvXvF4CcVPq1kquo17Sc86kiEAKMyUyvQvbfY7skYYq46TmvZcDXpWMGCTEDyl',
+    publishedDate: '2025-05-21T12:25:06.000Z',
+    category: 'csm',
+    imageUrl: 'https://scontent-cdg4-2.xx.fbcdn.net/v/t39.30808-6/499242858_122192324468052313_7684875113699463604_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=100&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=lnaplG6EowYQ7kNvwHcNTsX&_nc_oc=AdkT6JZv5i5zE_Tp6BvEBnzTx_ec1njBXk4nSO9diIKrRUfIzZDyPTaRM3M7SFT7m5k&_nc_zt=23&_nc_ht=scontent-cdg4-2.xx&_nc_gid=18irClikIX8jBSTFkK39FQ&oh=00_AfLZtUGKuQBCCa7cmFNmCRr4ltx9f6bH6aZ8HhDPkBUSEg&oe=6834DA50',
+    isFeatured: true,
+  },
+  {
+    id: '8',
+    title: '𝗜𝗡𝗧𝗘𝗡𝗦𝗘 𝗢𝗽𝗽𝗼𝗿𝘁𝘂𝗻𝗶𝘁𝗶𝗲𝘀: 𝗞𝘂𝗻 𝗦𝗵𝗮𝗻 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗶𝘁𝘆 𝗛𝗼𝘀𝘁𝘀 𝗜𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻 𝗦𝗲𝘀...',
+    content: '𝗜𝗡𝗧𝗘𝗡𝗦𝗘 𝗢𝗽𝗽𝗼𝗿𝘁𝘂𝗻𝗶𝘁𝗶𝗲𝘀: 𝗞𝘂𝗻 𝗦𝗵𝗮𝗻 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗶𝘁𝘆 𝗛𝗼𝘀𝘁𝘀 𝗜𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻 𝗦𝗲𝘀𝘀𝗶𝗼𝗻 𝗳𝗼𝗿 𝗦𝗰𝗶𝗲𝗻𝗰𝗲, 𝗘𝗻𝗴𝗶𝗻𝗲𝗲𝗿𝗶𝗻𝗴 𝗦𝘁𝘂𝗱𝗲𝗻𝘁𝘀 International opportunities are on the air for aspiring IITian professionals as Kun Shan University (KSU) in southern Taiwan held an information session for its International Talents Education Special Program (INTENSE) at the COE Amphitheater on May 20, 2025. Vice Chancellor for International Affairs Prof. Joey Genevieve Martinez, welcomed attendees with a message on the importance of international student mobility—especially towards shaping globally competitive graduates.  The session was jointly facilitated by the Office of the Vice Chancellor for International Affairs (OVCIA) and the League of International Parliamentarians for Global Initiatives (LIPGI). Led by KSU representative Wing Hsiao, the session spanned from multimedia presentations, an application orientation, and an open Q&A to address student inquiries.  Kun Shan University is known for its focus on semiconductors, electronics, automation, and the development of globally competent industry professionals. Hsiao noted that KSU was a recipient of Taiwan’s Higher Education Scholarship Project and ranks first among technological universities in the country in terms of grant benefits per student, boasting a project employment rate of over 95%. Scholarships and sponsorships are also available to support living expenses, as well as part-time employment opportunities tailored for international students.  "We are all your friends, so don\\\'t worry about this [program]. This links different universities in Taiwan; all the universities in Taiwan provide a good companion to your people, just trust yourself and find out," she concluded. Report by James Monteza  Proofread by Frenz Timtim Photos by Kian Garma  #INTENSE #KunShanUniversity #OVCIA #ForeverOnward',
+    sourceName: 'Ad Infinitum',
+    sourceUrl: 'https://www.facebook.com/CSMAdInfinitum/posts/pfbid0Htk8jmTN3dxa3wVrteAdEi98UQbGodGvUTdAJkCNiyqUTy5VsQDNnEAYaSqJ9Mk7l',
+    publishedDate: '2025-05-21T11:45:33.000Z',
+    category: 'csm',
+    imageUrl: 'https://scontent-cdg4-3.xx.fbcdn.net/v/t39.30808-6/499135156_122192321918052313_2847389039343976218_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=TJBD-MGRTREQ7kNvwHLV4ZC&_nc_oc=Adm14lQhoyMRzY24qAn2sCcHFJhLttD7WuUdZ9E4Ttw8x5KvttiNRjfIgQpnE5Dm_-A&_nc_zt=23&_nc_ht=scontent-cdg4-3.xx&_nc_gid=18irClikIX8jBSTFkK39FQ&oh=00_AfLRE5I7u5--4eJws4C3WbcRHfgJa6a7Yno9wsEsdP0A0A&oe=6834FBFC',
+    isFeatured: true,
+  },
+  {
+    id: '16',
+    title: '𝗠𝗦𝗨-𝗜𝗜𝗧 𝘁𝗼 𝗵𝗼𝘀𝘁 𝗾𝘂𝗮𝗻𝘁𝘂𝗺 𝗰𝗼𝗺𝗽𝘂𝘁𝗶𝗻𝗴 𝗹𝗲𝗰𝘁𝘂𝗿𝗲 𝗳𝗼𝗿 𝗦𝗧𝗘𝗠 𝘀𝘁𝘂𝗱𝗲𝗻𝘁𝘀 An introdu...',
+    content: '𝗠𝗦𝗨-𝗜𝗜𝗧 𝘁𝗼 𝗵𝗼𝘀𝘁 𝗾𝘂𝗮𝗻𝘁𝘂𝗺 𝗰𝗼𝗺𝗽𝘂𝘁𝗶𝗻𝗴 𝗹𝗲𝗰𝘁𝘂𝗿𝗲 𝗳𝗼𝗿 𝗦𝗧𝗘𝗠 𝘀𝘁𝘂𝗱𝗲𝗻𝘁𝘀 An introductory training lecture on quantum computing, organized by the Quantum Computing Society of the Philippines (QCSP), will be held at MSU-IIT on June 5, 2025. The event aims to engage high school and college-level STEM students in emerging technologies through a one-day session led by field experts. Full program details and registration information are provided by the organizers below. -+- 🚀 𝗔𝗿𝗲 𝘆𝗼𝘂 𝗮 𝗦𝗧𝗘𝗠 𝘀𝘁𝘂𝗱𝗲𝗻𝘁 𝗮𝘁 𝘁𝗵𝗲 𝗵𝗶𝗴𝗵 𝘀𝗰𝗵𝗼𝗼𝗹 𝗼𝗿 𝗰𝗼𝗹𝗹𝗲𝗴𝗲 𝗹𝗲𝘃𝗲𝗹? 𝗪𝗮𝗻𝘁 𝘁𝗼 𝗴𝗲𝘁 𝗮𝗵𝗲𝗮𝗱 𝗶𝗻 𝘁𝗵𝗲 𝗳𝘂𝘁𝘂𝗿𝗲 𝗼𝗳 𝗰𝗼𝗺𝗽𝘂𝘁𝗶𝗻𝗴 𝗮𝗻𝗱 𝘁𝗲𝗰𝗵𝗻𝗼𝗹𝗼𝗴𝘆? Don’t miss this 𝗼𝗻𝗰𝗲-𝗮-𝘆𝗲𝗮𝗿 𝗼𝗽𝗽𝗼𝗿𝘁𝘂𝗻𝗶𝘁𝘆 to learn from quantum computing experts in an 𝗲𝘅𝗰𝗹𝘂𝘀𝗶𝘃𝗲 𝘀𝗲𝘀𝘀𝗶𝗼𝗻 by the 𝗤𝘂𝗮𝗻𝘁𝘂𝗺 𝗖𝗼𝗺𝗽𝘂𝘁𝗶𝗻𝗴 𝗦𝗼𝗰𝗶𝗲𝘁𝘆 𝗼𝗳 𝘁𝗵𝗲 𝗣𝗵𝗶𝗹𝗶𝗽𝗽𝗶𝗻𝗲𝘀 (𝗤𝗖𝗦𝗣) also known as 𝗢𝗻𝗲𝗤𝘂𝗮𝗻𝘁𝘂𝗺 𝗣𝗵𝗶𝗹𝗶𝗽𝗽𝗶𝗻𝗲𝘀! 📍 𝗩𝗲𝗻𝘂𝗲: 𝗠𝗦𝗨-𝗜𝗜𝗧 📅 𝗗𝗮𝘁𝗲: 𝗝𝘂𝗻𝗲 𝟱𝘁𝗵, 𝟮𝟬𝟮𝟱 ⏳ 𝘓𝘪𝘮𝘪𝘵𝘦𝘥 𝘴𝘭𝘰𝘵𝘴 𝘢𝘷𝘢𝘪𝘭𝘢𝘣𝘭𝘦 — 𝘴𝘦𝘤𝘶𝘳𝘦 𝘺𝘰𝘶𝘳 𝘴𝘱𝘰𝘵 𝘯𝘰𝘸! 📌 𝘗𝘳𝘰𝘨𝘳𝘢𝘮 𝘧𝘭𝘰𝘸 𝘢𝘯𝘥 𝘴𝘤𝘩𝘦𝘥𝘶𝘭𝘦 𝘸𝘪𝘭𝘭 𝘣𝘦 𝘴𝘩𝘢𝘳𝘦𝘥 𝘴𝘰𝘰𝘯! 🔗 𝗦𝗶𝗴𝗻 𝘂𝗽 𝘂𝘀𝗶𝗻𝗴 𝗼𝘂𝗿 𝗧𝗮𝗹𝗹𝘆 𝗳𝗼𝗿𝗺: https://tally.so/r/mRl5Zv 𝘉𝘦 𝘱𝘢𝘳𝘵 𝘰𝘧 𝘢𝘯 𝘶𝘯𝘧𝘰𝘳𝘨𝘦𝘵𝘵𝘢𝘣𝘭𝘦 𝘭𝘦𝘢𝘳𝘯𝘪𝘯𝘨 𝘦𝘹𝘱𝘦𝘳𝘪𝘦𝘯𝘤𝘦 — 𝘰𝘯𝘭𝘺 𝘩𝘢𝘱𝘱𝘦𝘯𝘴 𝘰𝘯𝘤𝘦 𝘢 𝘺𝘦𝘢𝘳! #QuantumComputing #STEMStudents #HackTheFuture #QCSP #OneQuantumPH #MSUIIT #InfluencingTheFuture',
+    sourceName: 'The Motherboard',
+    sourceUrl: 'https://www.facebook.com/ccsmotherboard/posts/pfbid05Hum1WmZPx3hWd8doh9zkrCoTK9yKZc55A7VQua9WYRLxq192kUHifTp217MSbfjl',
+    publishedDate: '2025-05-18T01:00:22.000Z',
+    category: 'ccs',
+    imageUrl: 'https://scontent-lax3-1.xx.fbcdn.net/v/t39.30808-6/498654234_122137129670410293_380955514600889155_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=iTBg3MCpw9gQ7kNvwHsNhtb&_nc_oc=AdkOgh_yM8quZfJArGc-2FRPE8tRaIXHj-asYOSdn_OpxvHPF7cCoycSFzSLoTO6I4A&_nc_zt=23&_nc_ht=scontent-lax3-1.xx&_nc_gid=i__dZICuoN9Ba7FyhkVEbQ&oh=00_AfL8jflZVxGhcracGkz0Q-TwgyTdlF89tQJCNIuGcJB70w&oe=6834EC49',
+    isFeatured: false,
+  },
+  {
+    id: '9',
+    title: '𝗛𝗮𝘃𝗲𝗻\\\'𝘁 𝗿𝗲𝗰𝗲𝗶𝘃𝗲𝗱 𝗳𝗹𝗼𝘄𝗲𝗿𝘀 𝘁𝗼𝗱𝗮𝘆? Don\\\'t Fret, Lynxie got you covered. Have a glimmer of hope as...',
+    content: '𝗛𝗮𝘃𝗲𝗻\\\'𝘁 𝗿𝗲𝗰𝗲𝗶𝘃𝗲𝗱 𝗳𝗹𝗼𝘄𝗲𝗿𝘀 𝘁𝗼𝗱𝗮𝘆? Don\\\'t Fret, Lynxie got you covered. Have a glimmer of hope as Bring a Flower Day falls in the dark days of the final exam season.  Flowers are fleeting, but so are the challenges of IITian life. See you in the blooming days ahead. (Art by Amina Mindalano) #BringFlowersToSomeoneDay  #ForeverOnward',
+    sourceName: 'Ad Infinitum',
+    sourceUrl: 'https://www.facebook.com/CSMAdInfinitum/posts/pfbid0w7ifQJoxywpgw8CfoKfeNHbbTCs8ATYnqgisqVaSxDPxhzxfpn5M9qSenfEnbpj9l',
+    publishedDate: '2025-05-15T12:08:17.000Z',
+    category: 'csm',
+    imageUrl: 'https://scontent-cdg4-3.xx.fbcdn.net/v/t39.30808-6/498659092_122191602812052313_2245269859000245276_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=e21142&_nc_ohc=AhnwaeyLrwMQ7kNvwH8u4Wk&_nc_oc=AdnAG4FSKNFcimrpPdNiahbcDpzHvvRcC4oLS98h18I1fvlsgUCU19BI8kjbXV49lrk&_nc_zt=23&_nc_ht=scontent-cdg4-3.xx&_nc_gid=18irClikIX8jBSTFkK39FQ&oh=00_AfLxRd7nhsH0Kyv2uGZPVgN3Fx8aZSk0y0dCdS0joENwWw&oe=6834ECC6',
+    isFeatured: false,
+  },
+  {
+    id: '11',
+    title: '𝗟𝗶𝘁𝗲𝗿𝗮𝘁𝘂𝗿𝗲 𝗮𝘀 𝗥𝗲𝘀𝗶𝘀𝘁𝗮𝗻𝗰𝗲: 𝗣𝗮𝗻𝗶𝘁𝗶𝗸𝗮𝗻 𝘀𝗼𝗽𝗵𝗼𝗺𝗼𝗿𝗲𝘀 𝘀𝗽𝗼𝘁𝗹𝗶𝗴𝗵𝘁 𝘀𝗼𝗰𝗶𝗲𝘁�...',
+    content: '𝗟𝗶𝘁𝗲𝗿𝗮𝘁𝘂𝗿𝗲 𝗮𝘀 𝗥𝗲𝘀𝗶𝘀𝘁𝗮𝗻𝗰𝗲: 𝗣𝗮𝗻𝗶𝘁𝗶𝗸𝗮𝗻 𝘀𝗼𝗽𝗵𝗼𝗺𝗼𝗿𝗲𝘀 𝘀𝗽𝗼𝘁𝗹𝗶𝗴𝗵𝘁 𝘀𝗼𝗰𝗶𝗲𝘁𝗮𝗹 𝗶𝘀𝘀𝘂𝗲𝘀 𝗶𝗻 𝗦𝘂𝗸𝗶𝘁-𝗦𝘂𝗸𝗶𝘁 𝟮𝟬𝟮𝟱 Sixteen literary research papers were featured in Sukit-Sukit 2025, a colloquium where second-year BA Panitikan students defended their studies on diverse Philippine literary texts, exploring themes of resistance and social commentary. Held on Wednesday, May 7 at the Institute Mini-Theater, the event highlighted multifaceted approaches to literature as a lens for exploring pressing societal issues under the theme: “Dalumat sa mga Rehiyonal na Panitikan: Mga Boses ng Paglaban, Pagpapahayag, at Pag-usbong ng Kultura at Kamalayan sa Pampanitikang Pananaliksik.” Bringing fresh perspectives to the colloquium, five graduating students led the panel critiques—highlighting the next generation of Filipino literary scholars. Providing guidance and critical insights during the scholarly discussions were BA Panitikan fourth-years, Clariza Jane Ovillo, Kayrel Bloom Acero, Michelle Maglinte, Anniefaye Noreen Catarig, and Sarah Piamonte. During the opening remarks, Asst. Prof. Loi Vincent Deriada, PAN116’s course instructor, expressed his heartfelt gratitude, notably mentioning that this marked their fourth iteration of Sukit-Sukit which has persistently endured since the COVID-19 pandemic. He also emphasized the colloquium’s purpose of fostering deeper understanding of both social and academic issues relevant to literary studies. In an interview, Grachele Diangco Gamuzaran, a second-year BA Panitikan student whose research was awarded Best Paper during the colloquium expressed, “Malaki ang ambag ng mga kolokyum tulad ng Sukit-Sukit sa larangan ng pananaliksik. Nagsisilbi itong espasyo kung saan maaaring ilahad at ibahagi ng mga mananaliksik ang kanilang mga pag-aaral, mapakinggan ang puna at mungkahi ng kapwa iskolar, at makabuo ng dayalogo na tumutulay sa iba\\\'t ibang disiplina, wika, at perspektiba. Bukod dito, pinatitibay rin nito ang pagkilala sa mga lokal na panitikan at pananaw na madalas na naisantabi sa mas dominanteng diskurso.” The colloquium presented 16 compelling research papers that demonstrated the students’ rigorous engagement with contemporary literature as both an artistic and a sociopolitical medium. Among the standout presentations were: “Isip na Wasak, Tinig na Boses: Isang Masuring Pagsusuri sa Krisis sa Kalusugang Pangkaisipan Partikular sa Isyung Depresyon sa Akdang ‘Siya si Ril’ ni Hannah A. Leceña” by Angel Johanna Jalaman, April Kris Puasa, and Leonisa Ramos, which examined mental health crises. Intriguingly, there was also “Metapora ng Lipunang Pilipino: Ang Pananamantala, Panlilinlang, at Pang-aabuso sa Alamat ng Gubat ni Bob Ong Bilang Repleksyon ng Tunay na Kalagayan ng Pilipinas” by Viremi Antivo, Cathlene Orida, Cristen Jane Progella, and Edrian Larano, which was a critical analysis of Bob Ong’s allegory about the dire political state of the national scene. Exploring the timeless lesson of “‘Sandaang Damit’ ni Fanny A. Garcia: Materyalismo Bilang Panlipunang Pagtanggap”, Grant Adian Castillo, Jeanwin Quidlat, and Joshua Catamco pioneered the paper. Collectively, these works—along with those unmentioned—underscored the vitality of regional voices in confronting contemporary issues, ranging from cultural preservation to identity politics, all while pushing the boundaries of literary research and methodology. Despite all that, however, only three papers were honored as Best Papers in the colloquium. READ THE FULL STORY HERE: https://cassayuran.blogspot.com/…/literature-as-resistance-… Written by Pia Natalie Daymiel Photos by Andrea Karla Deligero Photo Edit by Aiyeesha Abah',
+    sourceName: 'CASSayuran IIT',
+    sourceUrl: 'https://www.facebook.com/cassayuran/posts/pfbid024jFn5hCnNzbTjRk4QVMZYPL528TyYgM6eBF28rfC7w3wwEdyYKBvphCbuKJMMqz8l',
+    publishedDate: '2025-05-13T14:27:48.000Z',
+    category: 'css',
+    imageUrl: 'https://scontent-ord5-3.xx.fbcdn.net/v/t39.30808-6/496861978_1067305935420529_4914701248505225062_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=110&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=ZiMBFZ6ceRsQ7kNvwETC5HT&_nc_oc=Adnu3wn1QNfAJ6ybq7S-O3_wEn2AETY6nQR2uop2Hkzoyxv-zGI6Ng_Hg1-rlBalUZI&_nc_zt=23&_nc_ht=scontent-ord5-3.xx&_nc_gid=Jn0YL95MYsyzUJpPET7d_g&oh=00_AfIPPm7xUa2odREIRyHY9w1eU3F0kuwtIyyYPXBFz3qk8g&oe=68350749',
+    isFeatured: false,
+  },
+  {
+    id: '10',
+    title: '𝗧𝗵𝗲 𝗥𝗲𝗽𝘂𝗯𝗹𝗶𝗰 𝗼𝗳 𝗥𝗲𝗰𝘆𝗰𝗹𝗲𝗱 𝗥𝗼𝗴𝘂𝗲𝘀: 𝗗𝘆𝗻𝗮𝘀𝘁𝗶𝗲𝘀, 𝗗𝗲𝗹𝘂𝘀𝗶𝗼𝗻𝘀, 𝗮𝗻𝗱 𝘁𝗵𝗲 𝗗𝗲𝗮...',
+    content: '𝗧𝗵𝗲 𝗥𝗲𝗽𝘂𝗯𝗹𝗶𝗰 𝗼𝗳 𝗥𝗲𝗰𝘆𝗰𝗹𝗲𝗱 𝗥𝗼𝗴𝘂𝗲𝘀: 𝗗𝘆𝗻𝗮𝘀𝘁𝗶𝗲𝘀, 𝗗𝗲𝗹𝘂𝘀𝗶𝗼𝗻𝘀, 𝗮𝗻𝗱 𝘁𝗵𝗲 𝗗𝗲𝗮𝘁𝗵 𝗼𝗳 𝗗𝗲𝗺𝗼𝗰𝗿𝗮𝗰𝘆 "Pilay hatag sa pikas? Pilay nadawat nimo? Pilay backing?"  Yesterday, May 12, 2025, millions of Filipinos trudged to the polls, a ritual meant to solidify democracy. Yet, the reported 2.74% of vote-buying violations nationwide—a mere sliver of the actual, insidious reality—casts a long, dark shadow.  Reported cases, sealed envelopes, sample ballots masquerading as currency, a grotesque mockery of electoral integrity. How many more clandestine transactions remain hidden, silently eroding the very foundation of our governance? It’s a bitter truth: genuine service, the bedrock of true leadership, is drowned out by the cacophony of cash. When votes are bought, principles are sold, and the machinery of good governance grinds to a halt. This is not politics; it\\\'s a parasitic infection, a shameless violation of our constitutional compact. Still counting your blood money? We\\\'ve never seen Filipinos so complacent to normalize vote-buying, to the point where even youth voters gloat over the backing—a form of time-limited cash release given to those who cast their votes before 9am—hampering not only an orderly flow of voters but also hindering seniors who are exiting from the early voting hours.  We rage against the rampant corruption, the systemic rot that plagues our nation, yet we willingly trade our votes for fleeting monetary trinkets, especially in the local polls.  We might rejoice at such a high vote turnout, not knowing that citizens were incentivized to vote not on their platforms but on the amount of money that they spend on each voter—augmented with their name on a sample ballot stapled with thousands of pesos.  The winning formula is no longer guns, goons and gold. It\\\'s sayaw, ayuda and fake news. No longer is there an exposition of policies, but a living auction of human rights for simple aid or subsistence, building branding instead of service, and exacerbating the age-old problem of vote buying in the country: a practice that has perpetuated political dynasties because of an incumbency advantage.  We exchange the promise of progress for pixelated illusions, hollow pledges that evaporate like volatile solvents under the harsh light of reality. Our minds, once sharp and discerning, are now chloroformed by the seductive allure of personality politics, and the familiar names of political dynasties. Consider this: are we truly assessing the legislative prowess of these candidates? Can they draft laws with precision, manage budgets with prudence, negotiate international treaties with sagacity, or are we merely swayed by the loudest voices, the most lavish handouts, or the inherited power of a surname? Sadly, the 2025 local elections have seen various local candidacies where multi-awarded leaders have been turned down by many voters simply because they offered less "cash incentives" than the opposing party. Vote buying persists, a viral contagion, and the highest bidder wins, regardless of competence or integrity.  We\\\'ve resurrected the political undead: dynasties that cling to power like kudzu, choking the life out of progress. We\\\'ve crowned heirs to thrones they haven\\\'t earned, where surnames outweigh substance, and bloodlines trump brains. We\\\'ve installed puppets who can\\\'t string a coherent sentence without a script, their words as hollow as their promises. Platforms, once beacons of hope, gather dust, their promises forgotten in the cacophony of the circus. Track records, the empirical evidence of a candidate\\\'s capability, are discarded like obsolete scientific data. We cry out against corruption, incompetence and stagnation, yet we perpetuate the very cycle that breeds them. We rage against the system, yet we refuse to recalibrate our engagement with it, clinging to the familiar comfort of self-sabotage. We’ve rolled out the red carpet for celebrities seeking a cushy retirement gig, treating public office like a golden parachute. We\\\'ve legitimized ex-convicts, their past transgressions brushed aside like inconvenient dust.  We’ve elevated those whose academic credentials wouldn’t qualify them to run a lemonade stand, let alone a nation. We\\\'ve offered seats of power to those with baggage so heavy, it threatens to collapse the very institutions they are supposed to uphold. Would you entrust your life to a surgeon who boasts of kindness but lacks the fundamental skill to wield a scalpel?  No, you wouldn’t. Then why, in the name of reason, do we allow incompetent candidates—those with inherited titles, those who can\\\'t speak without a script, those who treat public office as a retirement plan—to occupy positions of power, granting them six-figure salaries while they dismantle the very fabric of our society? We have allowed ourselves to be emotionally titrated, distracted by the ephemeral allure of 5k or 10k, oblivious to the long-term devastation it wreaks. Will that sum sustain you for the next three or six years? Or will it merely serve as a down payment on our collective ruin?  Next presidential election, where vote buying is expected to rise higher, promise us to  break this cycle, to dismantle this corrupt system, and to build a future where integrity outweighs any bribe. We are a nation addicted to our own dysfunction, a republic of recycled rogues. The blood money is counted. But the blood of our nation is also being spilled. What will be our choice? Opinion by: Richel Balucan Proofread by: Aaqilah Mangarun Photo by: James Monteza #Eleksyon2025 #Halalan2025 #ForeverOnward',
+    sourceName: 'Ad Infinitum',
+    sourceUrl: 'https://www.facebook.com/CSMAdInfinitum/posts/pfbid0BT8rjCsGFYDxXeCM725YcmQ2DLUJq7AYxT3bJda6Wu69aQiN135zsViqWrq78rKSl',
+    publishedDate: '2025-05-13T12:15:17.000Z',
+    category: 'csm',
+    imageUrl: 'https://scontent-cdg4-1.xx.fbcdn.net/v/t39.30808-6/497812425_122191361390052313_3960945816974360866_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=e21142&_nc_ohc=vNnJuDBz6YgQ7kNvwFdEmAs&_nc_oc=AdlqkmKMX6z6NkmntwRZNXXxBya_sQjw8IYGi6txuG8g41WRCdpQ8AHX75TFR2Tv8t0&_nc_zt=23&_nc_ht=scontent-cdg4-1.xx&_nc_gid=18irClikIX8jBSTFkK39FQ&oh=00_AfKTiRtqN8K9ONCbdgVlMZG2kW4dyJeZ_uXvVIlhXMQqig&oe=6834F96D',
+    isFeatured: false,
+  },
+  {
+    id: '12',
+    title: '𝗘𝘃𝗲𝗿𝘆 𝘃𝗼𝘁𝗲 𝗵𝗼𝗹𝗱𝘀 𝗽𝗼𝘄𝗲𝗿, 𝗮𝗻𝗱 𝗲𝘃𝗲𝗿𝘆 𝘃𝗼𝗶𝗰𝗲 𝗺𝗮𝘁𝘁𝗲𝗿𝘀! Your vote is more than just a ma...',
+    content: '𝗘𝘃𝗲𝗿𝘆 𝘃𝗼𝘁𝗲 𝗵𝗼𝗹𝗱𝘀 𝗽𝗼𝘄𝗲𝗿, 𝗮𝗻𝗱 𝗲𝘃𝗲𝗿𝘆 𝘃𝗼𝗶𝗰𝗲 𝗺𝗮𝘁𝘁𝗲𝗿𝘀! Your vote is more than just a mark on a ballot; it’s a powerful statement for change. Now is the time to rise and actively exercise your right to suffrage. More than choosing for ourselves, the polls herald the critical decisions that will impact those who need our support the most.  Every shaded box represents a choice for a better future, one that reflects the values of justice and progress as we move forward together as a nation.  Rise up and march to wield this power now. Truly, your vote is your voice, and it’s time to make it heard. A small tip: With long queues expected, be sure to locate your precincts ahead of time to avoid unnecessary delays. MORE UPDATES: https://cassayuran.blogspot.com/',
+    sourceName: 'CASSayuran IIT',
+    sourceUrl: 'https://www.facebook.com/cassayuran/posts/pfbid02bDuvbu8sKynjVxrKsk7eN66Mk9oPjq6tPQKN3BYV5S2ashntTnQdKhhX7kJPCg78l',
+    publishedDate: '2025-05-12T01:53:00.000Z',
+    category: 'css',
+    imageUrl: 'https://scontent-ord5-2.xx.fbcdn.net/v/t39.30808-6/497451506_1066257995525323_6463312027832212476_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=103&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=S--w_ZTcSLIQ7kNvwGUmQvt&_nc_oc=AdmWoJmxbQ82bqyQOQ5x_968E9EdiymSHqEFn_P__FqNdYD_GIPDmJqNCXkOvD13fsk&_nc_zt=23&_nc_ht=scontent-ord5-2.xx&_nc_gid=Jn0YL95MYsyzUJpPET7d_g&oh=00_AfL25-fLY-XhRFZ1SrKd3WE9uXGf_cv4SKJkebrZ2bKcuA&oe=6834F509',
+    isFeatured: false,
+  },
+  {
+    id: '17',
+    title: 'This Mother\\\'s Day, we celebrate hearts that overflow with compassion, a love that is a gift that continues to give, and...',
+    content: 'This Mother\\\'s Day, we celebrate hearts that overflow with compassion, a love that is a gift that continues to give, and spirits that shine brightly in so many. We acknowledge the extraordinary impact of a mother\\\'s love – felt in gentle guidance, comforting presence, and unwavering belief.  Today, we extend heartfelt Mother\\\'s Day wishes to all women across the world, who nurture, inspire, and build legacies of kindness and strength through their love.',
+    sourceName: 'The Motherboard',
+    sourceUrl: 'https://www.facebook.com/ccsmotherboard/posts/pfbid0zTgBGFDhmTc4NE7XoD27mddBgCNtY9e99ySheCNqiTmLijaMrSm8eeYDJWZvpsQ3l',
+    publishedDate: '2025-05-11T07:32:48.000Z',
+    category: 'ccs',
+    imageUrl: 'https://scontent-lax3-1.xx.fbcdn.net/v/t39.30808-6/496005567_122136580376410293_8955207414772843083_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e21142&_nc_ohc=_rM75W8w0YMQ7kNvwFNjoi9&_nc_oc=AdnMLN8TZDqD8iCMOcjQoffuBI1B2UwXSzQCI7lPDItSvAuVi3OSYINNmYY34F-_cr0&_nc_zt=23&_nc_ht=scontent-lax3-1.xx&_nc_gid=i__dZICuoN9Ba7FyhkVEbQ&oh=00_AfLeMFZjIT102IP5mnxZEoBizOWoQ74l5xHzCns-mKO2Lw&oe=6835076C',
+    isFeatured: false,
+  },
+  {
+    id: '1',
+    title: '𝐁𝐒 𝐂𝐢𝐯𝐢𝐥 𝐄𝐧𝐠𝐢𝐧𝐞𝐞𝐫𝐢𝐧𝐠 𝐩𝐫𝐨𝐠𝐫𝐚𝐦 𝐢𝐬 𝐭𝐨𝐩 𝐩𝐢𝐜𝐤 𝐢𝐧 𝐂𝐎𝐄, 𝐒𝐀𝐒𝐄 𝐝𝐚𝐭𝐚 𝐬𝐡𝐨𝐰𝐬 The...',
+    content: '𝐁𝐒 𝐂𝐢𝐯𝐢𝐥 𝐄𝐧𝐠𝐢𝐧𝐞𝐞𝐫𝐢𝐧𝐠 𝐩𝐫𝐨𝐠𝐫𝐚𝐦 𝐢𝐬 𝐭𝐨𝐩 𝐩𝐢𝐜𝐤 𝐢𝐧 𝐂𝐎𝐄, 𝐒𝐀𝐒𝐄 𝐝𝐚𝐭𝐚 𝐬𝐡𝐨𝐰𝐬 The Mindanao State University - Iligan Institute of Technology (MSU-IIT) has announced that its Bachelor of Science in Civil Engineering (BSCE) program is the most preferred program in the College of Engineering (COE), as revealed by the System Admission and Scholarship Examination (SASE) 2025 results. The BSCE program also emerged as the second most preferred program in the entire university, following BS Nursing. The BS Civil Engineering program has consistently been a top choice for aspiring IITians. This year, the program attracted a significant number of applicants, with 1913 hopefuls vying for a slot. Historically, the program could only accommodate around 40 students. However, MSU-IIT has recently expanded its capacity, with approximately 80 CE freshmen admitted for the current academic year. Further highlighting the university\\\'s academic excellence, the SASE 2025 results also showed that out of the 264 SASE topnotchers, 153 chose to enroll at MSU-IIT. MSU-IIT\\\'s overall popularity among students is evident in the SASE taker preferences. A remarkable 16,220 examinees indicated MSU-IIT as their preferred campus, making it the most preferred campus among the MSU system, based on the SASE 2025 data. Report by Abdul Azis Pandi Photo by Shaun Miguel Pagarigan #TheThuumPublication  #AccentuatingCoherenceOneWordAtATime',
+    sourceName: 'The Thu\\\'um Publication',
+    sourceUrl: 'https://www.facebook.com/thethuumpublication/posts/pfbid02G9PvbEXFFKVnXm68jR7FsjKsaP8ZPBL2m1PwNUwKMQVUyUVPbu9h8sv2UQP1L2t5l',
+    publishedDate: '2025-05-09T12:31:59.000Z',
+    category: 'coe',
+    imageUrl: 'https://scontent-iad3-2.xx.fbcdn.net/v/t39.30808-6/495211496_122238623984036639_5482541472524963253_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=Qmz_k3TTw70Q7kNvwHpUTYS&_nc_oc=AdkI1a5cnjzXp0cwECGjpF4-9ixA0on8-TIjUOmrPt7IyphOfQ8iEGiKPBnkzk8tZRU&_nc_zt=23&_nc_ht=scontent-iad3-2.xx&_nc_gid=ggS6J1_yIrU6VAaOMHqZQw&oh=00_AfKnJwpVjjJcr-mGYmQ9VYNm0SHs8cCXiuvwU9_q5QVYLA&oe=6835008E',
+    isFeatured: false,
+  },
+  {
+    id: '13',
+    title: '𝗕𝗔 𝗣𝗮𝗻𝗶𝘁𝗶𝗸𝗮𝗻 𝗝𝘂𝗻𝗶𝗼𝗿𝘀 𝗖𝗲𝗹𝗲𝗯𝗿𝗮𝘁𝗲 𝗔𝘀𝗶𝗮𝗻 𝗖𝘂𝗹𝘁𝘂𝗿𝗲𝘀 𝗶𝗻 𝗔𝘀𝘆𝗮𝗻𝗼𝗻𝗴 𝗞𝗶𝗼𝘀𝗸 �...',
+    content: '𝗕𝗔 𝗣𝗮𝗻𝗶𝘁𝗶𝗸𝗮𝗻 𝗝𝘂𝗻𝗶𝗼𝗿𝘀 𝗖𝗲𝗹𝗲𝗯𝗿𝗮𝘁𝗲 𝗔𝘀𝗶𝗮𝗻 𝗖𝘂𝗹𝘁𝘂𝗿𝗲𝘀 𝗶𝗻 𝗔𝘀𝘆𝗮𝗻𝗼𝗻𝗴 𝗞𝗶𝗼𝘀𝗸 𝟮𝟬𝟮𝟱 Third-year BA Panitikan students brought Asian cultures to life through Asyanong Kiosk 2025: Kambyo sa Panitikan at Buhay ng Kulturang Asyano, a cultural exhibit held on Tuesday, May 6 in fulfillment of their PAN131: Mga Panitikan sa Asya 2 course. Featuring booths representing Korea, Sri Lanka, Russia, Kazakhstan, Palestine, and Thailand, the event held at the CASS New Lobby combined educational displays with interactive games and traditional attires.  Charlene Jessa Delos Angeles, a Panitikan student representing the Sri Lanka booth, explained the event’s concept: “Each group picked one Asian country to showcase, not just its food, but also its history and culture,” she said. “For example, I’m the icon for Sri Lanka, so I wore a sari-inspired outfit.” Each kiosk offered attendees a unique cultural experience with videos, infographics, and games such as quiz bowls, mini games, and even karaoke; the exhibit aimed to offer both cultural insight and stress relief through a fun, immersive experience—timed perfectly during finals week. “Our goal is to make learning fun—to make learning about Asia fun and entertaining,” Delos Angeles added. MORE UPDATES: https://cassayuran.blogspot.com Layout by Ricardo Jose Gagno Photos from 3rd Year BA Panitikan',
+    sourceName: 'CASSayuran IIT',
+    sourceUrl: 'https://www.facebook.com/cassayuran/posts/pfbid02y8MWmXy73pJ3u4VF3gYu6iJFazYjVgqL3nwwLuiAfhH8DBMeYunUtCNSt42U7M9El',
+    publishedDate: '2025-05-08T08:08:21.000Z',
+    category: 'css',
+    imageUrl: 'https://scontent-ord5-2.xx.fbcdn.net/v/t39.30808-6/495933760_1063739632443826_2674367002796489601_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=102&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=IOV3MuHkkuoQ7kNvwEE2Um4&_nc_oc=Adk833uJ57wwau6sy7G-Z9JTh-HMZzjipFg4BAALcun7-FLVf6PTR0whcXyvuHma1kk&_nc_zt=23&_nc_ht=scontent-ord5-2.xx&_nc_gid=Jn0YL95MYsyzUJpPET7d_g&oh=00_AfI8JInfAOuh2CnZphhOZRPs3le6L98yTFVLjrqKc1HRfA&oe=683502DC',
+    isFeatured: false,
+  },
+  {
+    id: '2',
+    title: '𝐂𝐢𝐯𝐢𝐥 𝐞𝐧𝐠𝐢𝐧𝐞𝐞𝐫𝐢𝐧𝐠 𝐭𝐞𝐜𝐡𝐧𝐨𝐥𝐨𝐠𝐲 𝐦𝐚𝐫𝐤𝐬 𝐟𝐢𝐫𝐬𝐭 𝐡𝐚𝐫𝐝 𝐡𝐚𝐭𝐭𝐢𝐧𝐠 𝐚𝐧𝐝 𝐩𝐢𝐧𝐧𝐢𝐧...',
+    content: '𝐂𝐢𝐯𝐢𝐥 𝐞𝐧𝐠𝐢𝐧𝐞𝐞𝐫𝐢𝐧𝐠 𝐭𝐞𝐜𝐡𝐧𝐨𝐥𝐨𝐠𝐲 𝐦𝐚𝐫𝐤𝐬 𝐟𝐢𝐫𝐬𝐭 𝐡𝐚𝐫𝐝 𝐡𝐚𝐭𝐭𝐢𝐧𝐠 𝐚𝐧𝐝 𝐩𝐢𝐧𝐧𝐢𝐧𝐠 𝐜𝐞𝐫𝐞𝐦𝐨𝐧𝐲 The Civil Engineering Technology (CET) students of Mindanao State University - Iligan Institute of Technology (MSU-IIT) marked a significant milestone in their academic and professional journeys with their inaugural Hard Hatting and Pinning Ceremony. Held on April 28, 2025, at the university gymnasium, the event saw students proudly don hard hats, symbolizing their focused gaze on the future. Department of Civil Engineering and Technology (CET) chairperson, Dr. Elizabeth Albiento, underscored the importance of the occasion, describing the ceremony as the "passage into your professional role." She emphasized that this event not only represented a culmination of their academic endeavors but also signified the readiness of the 42 CET students to actively participate in the creation of vital infrastructure that shapes their community through building and innovation. The act of hard hatting and pinning served as a tangible testament to the students\\\' dedication, perseverance, and diligent effort within the construction field. Guest speaker Jyl Honey Muleta eloquently pointed out that this milestone embodied readiness, responsibility, and resilience. "Today isn’t just about hard hatting. Today is all about stepping to your calling. Wearing a hard hat is more than just a safety gear, it’s a symbol, a badge of responsibility. A reminder that the infrastructure we built, shaped life," she affirmed. Acknowledging a potential challenge, Muleta addressed the reality that CET graduates might encounter distinctions regarding their professional title compared to those holding a Bachelor of Science degree. She recognized that this could lead to disheartening remarks, such as "Dili mana siya engineer, nganong maminaw man ko sa iya?," potentially testing their self-assurance. In response, she urged the graduates to let their accomplishments be their primary form of communication, advising them to pause, take a breath, and allow their actions to speak volumes. Muleta passionately encouraged the CET students to embrace their program with pride, emphasizing that their worthiness would be demonstrated through their capabilities rather than solely by a title. She concluded this thought with an empowering message: "Wear that hard hat with pride, stay grounded, stay focused, and build boldly." The ceremony also included a poignant tribute to the unwavering support systems of the students. During this heartfelt moment, the graduates sang “Thanks to You” while presenting their parents and guardians with roses, symbolizing their deep gratitude and love. This was followed by a powerful and proud rendition of the community song “Here I Am,” celebrating the graduates\\\' well-deserved achievement. Batch top 1 Irish Mondares encapsulated the determined spirit of this pioneering class as they prepared to embark on their professional paths, stating, “In a world full of kapoy, be that pandayon kay naa tay pangandoy." With hard hats now firmly in place and pins displayed with pride, these students stand ready to transition into the practical world of the construction industry. Dr. Pamela Resurreccion, Vice Chancellor for Academic Affairs, brought the ceremony to a close with words that offered enduring guidance: “Wear your hard hats with pride, wear your pins with purpose, and move forward. You are ready." Report by Angel Faith Mirayo Photos by Jay-Em Balbuena and Rey Joaquin Eva #TheThuumPublication   #AccentuatingCoherenceOneWordAtATime',
+    sourceName: 'The Thu\\\'um Publication',
+    sourceUrl: 'https://www.facebook.com/thethuumpublication/posts/pfbid029CQoUdByQCLTXwDwe47vHXw7NqbDVwaCErRmrQRzJohKyDb2foZ4a7nbkENzhch9l',
+    publishedDate: '2025-05-08T03:21:24.000Z',
+    category: 'coe',
+    imageUrl: 'https://scontent-iad3-2.xx.fbcdn.net/v/t39.30808-6/495224696_122238429362036639_7817415242155982135_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=qa7dA4yKyD8Q7kNvwF8a1FE&_nc_oc=AdnxuAaDtuRbbmCkTUW3Sn2Ja-NV7QcCpln1SATCawUwgx0s9m2TN4GQo3cV22Ihru4&_nc_zt=23&_nc_ht=scontent-iad3-2.xx&_nc_gid=ggS6J1_yIrU6VAaOMHqZQw&oh=00_AfLBr6BB1YrBqDXhqiCWguMGUlf3bHIc6ebmyP36Oi2-2w&oe=68350A8B',
+    isFeatured: false,
+  },
+  {
+    id: '14',
+    title: '𝗧𝗿𝘂𝘁𝗵 𝗼𝗻 𝗕𝗮𝗹𝗹𝗼𝘁: 𝗠𝗲𝗱𝗶𝗮, 𝗗𝗶𝘀𝗰𝗼𝘂𝗿𝘀𝗲, 𝗮𝗻𝗱 𝘁𝗵𝗲 𝟮𝟬𝟮𝟱 𝗘𝗹𝗲𝗰𝘁𝗶𝗼𝗻𝘀 Assume your prec...',
+    content: '𝗧𝗿𝘂𝘁𝗵 𝗼𝗻 𝗕𝗮𝗹𝗹𝗼𝘁: 𝗠𝗲𝗱𝗶𝗮, 𝗗𝗶𝘀𝗰𝗼𝘂𝗿𝘀𝗲, 𝗮𝗻𝗱 𝘁𝗵𝗲 𝟮𝟬𝟮𝟱 𝗘𝗹𝗲𝗰𝘁𝗶𝗼𝗻𝘀 Assume your precincts and engage as the 2025 Midterm Elections peer around the corner! As student journalists, we in CASSayuran strive to not only inform—we capacitate our readers and spectators to function in the best interest of our rights. As we near yet again a major exercise of our democracy, conversations are not mere hosts of ideas, and platforms like media are beyond just a means of exchange. The importance of exploring how media influences political discussions lies in its role of shaping its users’ worldviews and how these worldviews eventually shape the world. “Truth on the Ballot: Media, Discourse, and the 2025 Elections” is a timely webinar that seeks to explore the challenges and responsibilities facing both media practitioners and the public in maintaining the integrity of democratic processes. With participation from expert, 𝗟𝗼𝘂 𝗘𝗹𝗹𝗲𝗻 𝗔𝗻𝘁𝗼𝗻𝗶𝗼 𝗳𝗿𝗼𝗺 𝘁𝗵𝗲 𝗣𝗵𝗶𝗹𝗶𝗽𝗽𝗶𝗻𝗲 𝗜𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻 𝗔𝗴𝗲𝗻𝗰𝘆 (𝗣𝗜𝗔) 𝗡𝗼𝗿𝘁𝗵𝗲𝗿𝗻 𝗠𝗶𝗻𝗱𝗮𝗻𝗮𝗼, join us in the pursuit of materializing a critical, responsible, and empowering approach to civic engagement! Date: 𝗠𝗮𝘆 𝟭𝟬, 𝟮𝟬𝟮𝟱 (𝗦𝗮𝘁𝘂𝗿𝗱𝗮𝘆) Time: 𝟲:𝟯𝟬 𝗣𝗠 - 𝟴:𝟯𝟬 𝗣𝗠 Platform: 𝗚𝗼𝗼𝗴𝗹𝗲 𝗠𝗲𝗲𝘁 Registration Link:  https://forms.gle/qYHsaN2j6bMaeKiw9 https://forms.gle/qYHsaN2j6bMaeKiw9 https://forms.gle/qYHsaN2j6bMaeKiw9 #CASSayuran #ThoughtandTruth #Democracy #2025PhilippineElections',
+    sourceName: 'CASSayuran IIT',
+    sourceUrl: 'https://www.facebook.com/cassayuran/posts/pfbid02nqXBjxLmWYCcMsv4EDDcuLFP21MmyrnY9GpNmGQwAqdxAQ1EBwnBwGQhJr9DXSAZl',
+    publishedDate: '2025-05-08T01:27:05.000Z',
+    category: 'css',
+    imageUrl: 'https://scontent-ord5-1.xx.fbcdn.net/v/t39.30808-6/496859869_1063569975794125_5295841166687188817_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=R6wqm38KSjUQ7kNvwF9ezcg&_nc_oc=AdkYCDZ1n8tRBXItuCTr7THotFzrYdWddw5pMFjJwX97_IhrHIieYn4vj66MF9Uq-RI&_nc_zt=23&_nc_ht=scontent-ord5-1.xx&_nc_gid=Jn0YL95MYsyzUJpPET7d_g&oh=00_AfKtsmF8jbztlKDrFebaxMeRU_aJ7r7czSaMtSvHH-jiLQ&oe=6834E6AB',
+    isFeatured: false,
+  },
+  {
+    id: '3',
+    title: '𝐆𝐨𝐢𝐧𝐠 𝐁𝐞𝐲𝐨𝐧𝐝, 𝐆𝐨𝐢𝐧𝐠 𝐅𝐮𝐫𝐭𝐡𝐞𝐫 Get ready to be inspired! Thu\\\'um takes you on a journey into the hear...',
+    content: '𝐆𝐨𝐢𝐧𝐠 𝐁𝐞𝐲𝐨𝐧𝐝, 𝐆𝐨𝐢𝐧𝐠 𝐅𝐮𝐫𝐭𝐡𝐞𝐫 Get ready to be inspired! Thu\\\'um takes you on a journey into the heart of MSU-IIT\\\'s engineering research with our special edition, "Going Beyond, Going Further." Just as we championed sustainability, we now spotlight the incredible potential of engineering to drive positive change. Discover how our university\\\'s investments are fueling innovations designed to uplift communities and propel the world forward. Turn these pages to witness the tangible impact of dedicated research and join us in celebrating a future engineered for the better.  https://bit.ly/ThuumResearchWeek2025 https://bit.ly/ThuumResearchWeek2025 https://bit.ly/ThuumResearchWeek2025 #TheThuumPublication  #AccentuatingCoherenceOneWordAtATime',
+    sourceName: 'The Thu\\\'um Publication',
+    sourceUrl: 'https://www.facebook.com/thethuumpublication/posts/pfbid02LGg9kWnZ9NabvW3MQgEG9JLWdyBdXJXPAfUoSXFDxM8X6dFpTPUdzQr5eRqSCCsml',
+    publishedDate: '2025-05-07T15:21:13.000Z',
+    category: 'coe',
+    imageUrl: 'https://scontent-iad3-1.xx.fbcdn.net/v/t39.30808-6/495578297_122238343082036639_563144629114724589_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=102&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=xRh27vr44ZoQ7kNvwFxrIyK&_nc_oc=Admod2LzEP2ldh5ugGIgC6-uhaO73TLWJwiFbXWYNm6Kj7y6SD4TIKY2aw0weT0I4UU&_nc_zt=23&_nc_ht=scontent-iad3-1.xx&_nc_gid=ggS6J1_yIrU6VAaOMHqZQw&oh=00_AfKlovHGPoPuaqq46X-YvVTVoeA4pGqA5geiwRdVMlGqyw&oe=6834E52F',
+    isFeatured: false,
+  },
+  {
+    id: '4',
+    title: '𝐀𝐃𝐕𝐈𝐒𝐎𝐑𝐘: All research laboratories will be closed from May 23-28, 2025. This temporary suspension is necessary...',
+    content: '𝐀𝐃𝐕𝐈𝐒𝐎𝐑𝐘: All research laboratories will be closed from May 23-28, 2025. This temporary suspension is necessary to allow Mindanao State University - Iligan Institute of Technology (MSU-IIT) to serve as a local testing center for the 2025 Special Shari\\\'ah Bar Examination (SSBE) conducted by the Supreme Court of the Philippines.  This measure ensures the proper and secure conduct of this important national examination within our university premises. During this period, students are make the necessary arrangements to secure their ongoing experiments and equipment before the closure. #TheThuumPublication  #AccentuatingCoherenceOneWordAtATime',
+    sourceName: 'The Thu\\\'um Publication',
+    sourceUrl: 'https://www.facebook.com/thethuumpublication/posts/pfbid02thAUq1vku56RJKoFydxEoqwZ7ktCkVeNXxrvgiWAyf75y95QX2MQntp7A3BMCErdl',
+    publishedDate: '2025-05-07T12:04:18.000Z',
+    category: 'coe',
+    imageUrl: 'https://scontent-iad3-1.xx.fbcdn.net/v/t39.30808-6/495963073_122238319964036639_272196108330143582_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=101&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=kdDr8ZqhMtAQ7kNvwFhgCTP&_nc_oc=AdmttfzaLc4m7W3nehErnmQPZcZvEY2jRg9cbUcqNwuKdpGyW8JRujwRSMGpKRdupv0&_nc_zt=23&_nc_ht=scontent-iad3-1.xx&_nc_gid=ggS6J1_yIrU6VAaOMHqZQw&oh=00_AfJJt-OVsrhfRtBPQKWe-IJEliKEwFzaA84kAag7ftrqHg&oe=6834E864',
+    isFeatured: false,
+  },
+  {
+    id: '5',
+    title: '𝐓𝐰𝐨 𝐂𝐄 𝐠𝐫𝐚𝐝𝐮𝐚𝐭𝐞𝐬 𝐬𝐞𝐜𝐮𝐫𝐞 𝐭𝐨𝐩 𝐫𝐚𝐧𝐤𝐬 𝐢𝐧 𝐀𝐩𝐫𝐢𝐥 𝟐𝟎𝟐𝟓 𝐥𝐢𝐜𝐞𝐧𝐬𝐮𝐫𝐞 𝐞𝐱𝐚𝐦𝐢𝐧𝐚...',
+    content: '𝐓𝐰𝐨 𝐂𝐄 𝐠𝐫𝐚𝐝𝐮𝐚𝐭𝐞𝐬 𝐬𝐞𝐜𝐮𝐫𝐞 𝐭𝐨𝐩 𝐫𝐚𝐧𝐤𝐬 𝐢𝐧 𝐀𝐩𝐫𝐢𝐥 𝟐𝟎𝟐𝟓 𝐥𝐢𝐜𝐞𝐧𝐬𝐮𝐫𝐞 𝐞𝐱𝐚𝐦𝐢𝐧𝐚𝐭𝐢𝐨𝐧 The civil engineering program at Mindanao State University - Iligan Institute of Technology (MSU-IIT) achieved a 65.31% passing rate in the recently concluded April 2025 Civil Engineers Licensure Examination (CELE). This noteworthy performance significantly surpassed the national average of 29.21%. MSU-IIT is also celebrating the exceptional achievements of two alumni: Nur Hameen Cabugatan Interino, who ranked 2nd with a remarkable score of 92.60%, and John Michael Lapura Ang, who ranked 5th with a commendable score of 91.90%.  These top-performing individuals exemplify the high-quality education provided by the university\\\'s civil engineering department. An impressive 29 out of 32 individuals taking the examination for the first time from MSU-IIT were successful, resulting in a 90.63% passing rate for this group. Additionally, 3 out of 17 previous examinees from the university also passed. The national Civil Engineers Licensure Examination, held on April 28 and 29, 2025, attracted 16,913 examinees from various institutions across the Philippines. Of this, only 4,940 successfully passed the assessment. The Professional Regulation Commission (PRC) officially released these awaited results today, May 6, 2025. #TheThuumPublication  #AccentuatingCoherenceOneWordAtATime',
+    sourceName: 'The Thu\\\'um Publication',
+    sourceUrl: 'https://www.facebook.com/thethuumpublication/posts/pfbid0C3Y8K3cGgwjanZyvJNPNFhaKPtsKCy5Bsrx7qv6e6zeQo4vDNVVebB3HJmxzQ2FTl',
+    publishedDate: '2025-05-06T14:26:23.000Z',
+    category: 'coe',
+    imageUrl: 'https://scontent-iad3-2.xx.fbcdn.net/v/t39.30808-6/495568977_122238171986036639_7684293086525501470_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=EgwOl47T2K4Q7kNvwHa6n86&_nc_oc=Adnp6w0JpPwvB-rUHkxryiOG7lwygqkuZbyng9_QKDUddxES2NQIZw72w42Vpyd0nk4&_nc_zt=23&_nc_ht=scontent-iad3-2.xx&_nc_gid=ggS6J1_yIrU6VAaOMHqZQw&oh=00_AfLS58j9dFhM0m-Gq8DwL0JgfZpezGPijlo7WgccBwZ3jw&oe=68350898',
+    isFeatured: false,
+  },
+  {
+    id: '15',
+    title: '𝗠𝗦𝗨-𝗜𝗜𝗧 𝗵𝗮𝘀 𝗿𝗲𝗼𝗽𝗲𝗻𝗲𝗱 𝗶𝘁𝘀 𝗮𝗱𝗺𝗶𝘀𝘀𝗶𝗼𝗻 𝗽𝗼𝗿𝘁𝗮𝗹 𝗶𝗻 𝘁𝗵𝗲 𝗽𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗼𝗳 𝗮𝗽�...',
+    content: '𝗠𝗦𝗨-𝗜𝗜𝗧 𝗵𝗮𝘀 𝗿𝗲𝗼𝗽𝗲𝗻𝗲𝗱 𝗶𝘁𝘀 𝗮𝗱𝗺𝗶𝘀𝘀𝗶𝗼𝗻 𝗽𝗼𝗿𝘁𝗮𝗹 𝗶𝗻 𝘁𝗵𝗲 𝗽𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗼𝗳 𝗮𝗽𝗽𝗹𝗶𝗰𝗮𝘁𝗶𝗼𝗻 for a second and final extension, giving more applicants the chance to apply. This move takes into account reports from students who only learned about the application process after the SASE results were released or were unable to complete their requirements on time. The portal will remain open until new May 15, Thursday. Don’t miss the opportunity, future IITians! MORE UPDATES: https://cassayuran.blogspot.com',
+    sourceName: 'CASSayuran IIT',
+    sourceUrl: 'https://www.facebook.com/cassayuran/posts/pfbid0wkXHQcA1qsHaDtUhVibjFWPM6RCNscSTA3kD9P7FKPrRJbUeRwLAuaWPsJb6Ffuml',
+    publishedDate: '2025-05-06T13:46:16.000Z',
+    category: 'css',
+    imageUrl: 'https://scontent-ord5-3.xx.fbcdn.net/v/t39.30808-6/494894990_1062474352570354_7913496785099729096_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=e21142&_nc_ohc=W6TnFfBqWIIQ7kNvwF4SM8V&_nc_oc=AdlJHsy4Ys0cxmJzN7rRX90xmRsNlcVlUY7GqeVYHyLC1n8tUB0V6OtZVIpyygAzIyc&_nc_zt=23&_nc_ht=scontent-ord5-3.xx&_nc_gid=Jn0YL95MYsyzUJpPET7d_g&oh=00_AfI4U9wMja35QCxO9-vyH3Q7uwt6yYTBSRpYCNtpaqMbgQ&oe=6834D5AC',
+    isFeatured: false,
+  },
+  {
+    id: '18',
+    title: 'Nag-work man o hindi, Happy Labor Day pa rin sa mga patuloy na lumalaban! 💙 #TheMotherboard #ConnectingEveryByteTruthIn...',
+    content: 'Nag-work man o hindi, Happy Labor Day pa rin sa mga patuloy na lumalaban! 💙 #TheMotherboard #ConnectingEveryByteTruthInSight',
+    sourceName: 'The Motherboard',
+    sourceUrl: 'https://www.facebook.com/ccsmotherboard/posts/pfbid0zntyCgQwKf4YYZ1p8CAFwCjVTNYWLwgbfWQ5fRvSvUYmugnzWerfUrBzeRk6ZwJYl',
+    publishedDate: '2025-05-01T06:37:53.000Z',
+    category: 'ccs',
+    imageUrl: 'https://scontent-lax3-1.xx.fbcdn.net/v/t39.30808-6/494197369_122135577296410293_1030346690136184922_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=102&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=Gzp05DPbbbcQ7kNvwFKhuB1&_nc_oc=AdmiM50LQ8cGSA-fPefbTILxlMfSprgFoUA0vGuGyKPVnLrz827HCU-7CHKsV6CSCOU&_nc_zt=23&_nc_ht=scontent-lax3-1.xx&_nc_gid=i__dZICuoN9Ba7FyhkVEbQ&oh=00_AfLOonRJ6_hBEO6DK2-AvkKELgRscBIBU9ETi2Keu9PCTw&oe=6834DCD6',
+    isFeatured: false,
+  },
+  {
+    id: '19',
+    title: '𝗠𝗦𝗨-𝗜𝗜𝗧 𝗧𝗲𝗰𝗵𝗻𝗼𝗖𝗮𝘁𝘀 𝗰𝗿𝗼𝘄𝗻𝗲𝗱 𝗰𝗵𝗮𝗺𝗽𝗶𝗼𝗻𝘀 𝗮𝘁 𝗡𝗮𝘁𝗶𝗼𝗻𝗮𝗹 𝗜𝗻𝗻𝗼𝘃𝗮𝘁𝗶𝗼𝗻 𝗗𝗮𝘆 �...',
+    content: '𝗠𝗦𝗨-𝗜𝗜𝗧 𝗧𝗲𝗰𝗵𝗻𝗼𝗖𝗮𝘁𝘀 𝗰𝗿𝗼𝘄𝗻𝗲𝗱 𝗰𝗵𝗮𝗺𝗽𝗶𝗼𝗻𝘀 𝗮𝘁 𝗡𝗮𝘁𝗶𝗼𝗻𝗮𝗹 𝗜𝗻𝗻𝗼𝘃𝗮𝘁𝗶𝗼𝗻 𝗗𝗮𝘆 𝟮𝟬𝟮𝟱, 𝗽𝘂𝘀𝗵𝗶𝗻𝗴 𝗙𝗶𝗹𝗶𝗽𝗶𝗻𝗼 𝗮𝗴𝗿𝗶𝘁𝗲𝗰𝗵 𝗳𝗼𝗿𝘄𝗮𝗿𝗱 A team of students from Mindanao State University - Iligan Institute of Technology marked their claws at the National Innovation Day 2025 held at the Novotel Manila Araneta City, Quezon City, yesterday, April 28-30, 2025. The team, TechnoCats from the College of Computer Studies, is composed of Sean Benson, Josiah Lluch, Tristan Listanco, and Kayron Rivera, together with their mentor, Asst. Prof. Stefany Caparida, emerged victorious competing against 17 teams across the Philippines in the food and agribusiness category.  With the theme "FLIP: Forging Leaders of Innovation in the Philippines,” the event was organized by the National Innovation Council in collaboration with the Department of Economy, Planning, and Development, aimed at inspiring and empowering the next generations of leaders through workshops and talks from keynote speakers in the innovation sector. The team enthusiastically shared their experience noting that the event not only allowed them to showcase their skills but also provided them with valuable knowledge through the Huddle, Analyze, Build, and Innovate (H.A.B.I.) Workshop.  “We have gained valuable knowledge from experts through the H.A.B.I. workshop. Aside from that, the speakers of the event made us understand how innovation is imperative towards the country\\\'s development.” Despite facing technical challenges during the event, Technocats remained determined, showing resilience and teamwork throughout. Their experience proved both challenging and rewarding for the team, who gained valuable knowledge and insights that they intend to share with the students.  “As student Filipinnovators, it’s our mission to empower other students by sharing the knowledge we gained from the experts,” the team shared. The success of Technocats highlights their commitment to continuous learning and innovation. Their journey serves as an inspiration and encouragement to young Filipino innovators to continue the passion and perseverance that can lead to great achievements.  Report by Jhen Mercado Proofread by Althea Grace Amsali #TheMotherboard #ConnectingEveryByteTruthInSight',
+    sourceName: 'The Motherboard',
+    sourceUrl: 'https://www.facebook.com/ccsmotherboard/posts/pfbid0DqqJKq2982MoQtBYpLKazfXJhbAuyzUUCT4GzaYGGNqAR4YhVAjKVg2Y2m8U4dXSl',
+    publishedDate: '2025-04-29T12:44:56.000Z',
+    category: 'ccs',
+    imageUrl: 'https://scontent-lax3-2.xx.fbcdn.net/v/t39.30808-6/494678848_122135414096410293_5103977435973618665_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=103&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=C1_vFc3n_gwQ7kNvwFPDgUJ&_nc_oc=AdnU47ytqcjlyLWg31y1HNZbwijGKQZUr3-3mKCKQRabzE9be42kK-vlASHKMRTmwKc&_nc_zt=23&_nc_ht=scontent-lax3-2.xx&_nc_gid=i__dZICuoN9Ba7FyhkVEbQ&oh=00_AfJS6abP8v6PGM8s8AjPKvTXJNHWdAoyZ7kbGZWo_aSYZg&oe=6834EFAC',
+    isFeatured: false,
+  },
+  {
+    id: '20',
+    title: '𝗜𝗻𝗰𝗹𝘂𝘀𝗶𝗧𝗲𝗰𝗵 𝘁𝗲𝗮𝗺 𝗼𝗳 𝗠𝗦𝗨-𝗜𝗜𝗧 𝗰𝗹𝗮𝗶𝗺𝘀 𝘁𝗼𝗽 𝗽𝗿𝗶𝘇𝗲 𝗮𝘁 𝗦𝗵𝗲𝗶𝗻𝗻𝗼𝘃𝗮𝘁𝗼𝗿𝘀 𝗿𝗲𝘀...',
+    content: '𝗜𝗻𝗰𝗹𝘂𝘀𝗶𝗧𝗲𝗰𝗵 𝘁𝗲𝗮𝗺 𝗼𝗳 𝗠𝗦𝗨-𝗜𝗜𝗧 𝗰𝗹𝗮𝗶𝗺𝘀 𝘁𝗼𝗽 𝗽𝗿𝗶𝘇𝗲 𝗮𝘁 𝗦𝗵𝗲𝗶𝗻𝗻𝗼𝘃𝗮𝘁𝗼𝗿𝘀 𝗿𝗲𝘀𝗲𝗮𝗿𝗰𝗵 𝘄𝗲𝗲𝗸 𝗵𝗮𝗰𝗸𝗮𝘁𝗵𝗼𝗻 Demonstrating a fusion of innovation, inclusivity, and entrepreneurship, a team of students from the Mindanao State University – Iligan Institute of Technology (MSU-IIT) emerged victorious at the Sheinnovators: A Research Week Hackathon held on April 23–24, 2025, at the iDEYA: Center for Innovation and Technopreneurship. Competing against some of the university’s most promising innovators, the team, known as InclusiTech, secured first place with their Internet of Things (IoT)-based project designed to advance Gender and Development (GAD) initiatives and the Sustainable Development Goals (SDGs). Their innovation underscored the transformative potential of technology in fostering a more inclusive, equitable, and sustainable society. "It’s an honor to bring home this win, but more importantly, it’s about being part of a movement that champions inclusivity through innovation," the members of Team InclusiTech stated. The team is composed of Andrew Earl Andres (the Hipster: Designer and Visionary), Jiandale Ambal (the Hacker: Developer and Tech Specialist), and Princess April Castillo (the Hustler: Business Strategist and Communicator). Together, they formed a startup trio embodying creativity, technical expertise, and entrepreneurial drive. Sheinnovators: A Research Week Hackathon challenged students to conceptualize startup ideas addressing real-world issues with a focus on innovation, sustainability, and inclusivity. Over two days, participants engaged in mentorship sessions, ideation workshops, and intensive pitching rounds, culminating in a showcase of solutions designed to generate social impact. In reflecting on their achievement, InclusiTech members expressed their gratitude for the opportunity to contribute to MSU-IIT’s culture of innovation and social responsibility. They noted that the experience strengthened their commitment to developing technology-driven solutions for positive change. Their triumph at Sheinnovators further highlights MSU-IIT’s dedication to nurturing changemakers equipped to lead in the technology and development sectors, both within and beyond the university community. Contributed by Andrew Earl Andres #TheMotherboard #ConnectingEveryByteTruthInSight',
+    sourceName: 'The Motherboard',
+    sourceUrl: 'https://www.facebook.com/ccsmotherboard/posts/pfbid0dK2bbt36KZejyyJgDha51jbH8ak4r9em2TidusBTEMa6LRTRcNQKjWUb3WZAgQtGl',
+    publishedDate: '2025-04-27T07:24:06.000Z',
+    category: 'ccs',
+    imageUrl: 'https://scontent-lax3-1.xx.fbcdn.net/v/t39.30808-6/493471141_122135195156410293_6206609420138638683_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=109&ccb=1-7&_nc_sid=e5c1b6&_nc_ohc=nd0jrQvtsloQ7kNvwHKTOy1&_nc_oc=AdlVn7ogOBeCWQQhTNNp8Mzlgifzdx8SBXy5OGrn05a_U4jKLeGmS2X-zIHhErZ1Y70&_nc_zt=23&_nc_ht=scontent-lax3-1.xx&_nc_gid=i__dZICuoN9Ba7FyhkVEbQ&oh=00_AfKPxv5KQIxjbHjikEZXB-0idj2RP6xqhTer4KiiU7N0Kw&oe=6834DA88',
+    isFeatured: false,
+  }
+];
