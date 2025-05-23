@@ -53,10 +53,7 @@ export function ArticleCard({ article, onReadMore }: ArticleCardProps) {
           </div>
         </div>
       </CardHeader>
-
-      {/* Spacer pushes footer to bottom */}
-      <div className="flex-grow" />
-
+      
       {/* Footer */}
       <CardFooter className="p-4 flex justify-between items-center border-t mt-auto">
         <Button

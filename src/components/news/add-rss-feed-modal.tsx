@@ -20,6 +20,7 @@ import { Loader2 } from 'lucide-react';
 
 const rssFeedSchema = z.object({
   name: z.string().min(1, "Feed name is required"),
+  tag: z.string().min(1, "Tag is required"),
   url: z.string().url("Invalid URL format"),
 });
 
@@ -72,7 +73,7 @@ export function AddRssFeedModal({ isOpen, onClose, onFeedAdd }: AddRssFeedModalP
         <DialogHeader>
           <DialogTitle>Add New RSS Feed</DialogTitle>
           <DialogDescription>
-            Enter the details of the RSS feed you want to add.
+            Enter the details of the RSS feed you want to add. This feature is currently simulated.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
@@ -85,15 +86,17 @@ export function AddRssFeedModal({ isOpen, onClose, onFeedAdd }: AddRssFeedModalP
               {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
             </div>
           </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="tag" className="text-right">
               Tag
             </Label>
             <div className="col-span-3">
-              <Input id="tag" {...register("name")} placeholder="all" className={errors.url ? "border-destructive" : ""} />
-              {errors.url && <p className="text-xs text-destructive mt-1">{errors.url.message}</p>}
+              <Input id="tag" {...register("tag")} className={errors.tag ? "border-destructive" : ""} />
+              {errors.tag && <p className="text-xs text-destructive mt-1">{errors.tag.message}</p>}
             </div>
           </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="url" className="text-right">
               URL
@@ -103,6 +106,7 @@ export function AddRssFeedModal({ isOpen, onClose, onFeedAdd }: AddRssFeedModalP
               {errors.url && <p className="text-xs text-destructive mt-1">{errors.url.message}</p>}
             </div>
           </div>
+
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => { reset(); onClose(); }} disabled={isSubmitting}>
               Cancel

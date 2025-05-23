@@ -15,29 +15,36 @@ export function ArticleList({ articles, onReadMore }: ArticleListProps) {
     );
   }
 
-  const featuredArticle = articles.find((a) => a.isFeatured) || articles[0];
-  const otherArticles = articles.filter((a) => a.id !== featuredArticle.id);
+  const featuredArticles = articles.filter((a) => a.isFeatured);
+  const otherArticles = articles.filter((a) => !a.isFeatured);
 
   return (
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 h-[80vh] p-4">
-  {/* Left Column: Featured */}
-  <div className="h-full">
-    <ArticleCard article={featuredArticle} onReadMore={onReadMore} />
-  </div>
+    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 h-[80vh] p-4">
+      {/* Left Column: All featured articles */}
+      <div className="overflow-y-auto space-y-4 h-[80vh]">
+        {featuredArticles.length > 0 ? (
+          featuredArticles.map((article) => (
+            <ArticleCard key={article.id} article={article} onReadMore={onReadMore} />
+          ))
+        ) : (
+          <p className="text-center text-muted-foreground py-8">
+            No featured articles.
+          </p>
+        )}
+      </div>
 
-  {/* Right Column: Scrollable list container */}
-  <div className="flex flex-col h-full min-h-0">
-    {/* Wrapper that can scroll if content overflows */}
-    <div className="overflow-y-auto flex-1 space-y-4 pr-2">
-      {otherArticles.map((article) => (
-        <div key={article.id}>
-          <ArticleCard article={article} onReadMore={onReadMore} />
-        </div>
-      ))}
+      {/* Right Column: All non-featured articles */}
+      <div className="overflow-y-auto space-y-4 pr-2 h-[80vh]">
+        {otherArticles.length > 0 ? (
+          otherArticles.map((article) => (
+            <ArticleCard key={article.id} article={article} onReadMore={onReadMore} />
+          ))
+        ) : (
+          <p className="text-center text-muted-foreground py-8">
+            No other articles.
+          </p>
+        )}
+      </div>
     </div>
-  </div>
-</div>
-
-
   );
 }
