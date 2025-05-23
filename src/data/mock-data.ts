@@ -1,105 +1,50 @@
+import mysql from 'mysql2/promise';
 import type { Article, Category } from '@/types';
 import { Landmark, Cpu, Trophy, Briefcase, Globe, Cog } from 'lucide-react';
 
+const DB_CONFIG = {
+  host: 'localhost',
+  user: 'root',
+  password: '12345678',
+  database: 'my_website_db',
+};
+
+
+
 export const categories: Category[] = [
   { id: 'all', name: 'All', icon: Globe },
-  { id: 'coet', name: 'Engineering', icon: Landmark },
+  { id: 'coe', name: 'Engineering', icon: Cog },
   { id: 'csm', name: 'Science and Mathematics', icon: Cpu },
-  { id: 'ced', name: 'Education', icon: Trophy },
-  { id: 'ceba', name: 'Economics, Business and Accountancy', icon: Briefcase },
+  { id: 'ced', name: 'Education', icon: Landmark },
+  { id: 'cba', name: 'Economics, Business and Accountancy', icon: Briefcase },
   { id: 'ccs', name: 'Computer Science', icon: Cog },
-  { id: 'cass', name: 'Arts and Social Science', icon: Cog },
+  { id: 'css', name: 'Arts and Social Science', icon: Cog },
   { id: 'chs', name: 'Health Science', icon: Cog },
 ];
 
-export const articles: Article[] = [
-  {
-    id: '1',
-    title: 'Breaking: New Tech Innovation Shakes the Market',
-    content: 'What Went Wrong with Garten of BanBan? From carrying on the mascot cliche with a Poppy Playtime formula A lot but after making the choice to leave social media, focus on the games in hand and releasing BanBan after BanBan, things are starting to look better.The Garten of BanBan series still has some lingering issues, yet since Garten of BanBan 7 promise for something better is starting to shine through.',
-    sourceName: 'Tech Chronicle',
-    sourceUrl: 'https://example.com/tech-news-1',
-    publishedDate: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(), // 1 hour ago
-    category: 'csm',
-    imageUrl: 'https://scontent.fcgy2-4.fna.fbcdn.net/v/t39.30808-6/499698206_1334103924917833_9154758100549840691_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGg6Rcm2q_4NEO2wSJ6YhiAD7oGpTAi1AEPugalMCLUAdYY10rRPBzZVqDd7EkM6jPvbmVCsmD72OvGwVA9HWgh&_nc_ohc=hoVH-D5jmkYQ7kNvwEZ0QG8&_nc_oc=Adnfle06N39rQpuWBMQ3xHXo8NEXc06ChqWbAyVdBN3r7skmVelYQB0RQD2d_0KTXPM&_nc_zt=23&_nc_ht=scontent.fcgy2-4.fna&_nc_gid=9Ry9f2G_hzcdCaMobwCUAw&oh=00_AfImlklM2qr4eP4gChJncbp0OzAMMB5w9GonuIcaD9QLtQ&oe=6832EBDA',
-    isFeatured: true,
-  },
-  {
-    id: '2',
-    title: 'Global Summit Addresses Climate Change Urgently',
-    content: 'Leaders from around the world convened today for an emergency summit on climate change. The talks are focused on setting more ambitious emissions targets and providing financial aid to developing nations for green initiatives. Activists have gathered outside the summit venue, urging policymakers to take decisive action. The summit is expected to last three days, with a final communiqué outlining new commitments. Scientific reports presented at the opening session painted a stark picture of the accelerating climate crisis. Discussions have reportedly been intense, with significant disagreements on burden-sharing and the phasing out of fossil fuels. However, a spokesperson for the summit expressed cautious optimism that a meaningful agreement could be reached.',
-    sourceName: 'World News Agency',
-    sourceUrl: 'https://example.com/world-news-1',
-    publishedDate: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
-    category: 'coet',
-    imageUrl: 'https://scontent.fcgy2-1.fna.fbcdn.net/v/t39.30808-6/498014629_1330238035304422_3431244748341837599_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEab3P4Qkfvh5eows18IjfOF9QfeXa-PewX1B95dr497BENuMBb-LzDEUDOdOyVocrtMrWnX8Ko5WvqvgbJ9fgY&_nc_ohc=zve_nZOL0BIQ7kNvwGTjSYX&_nc_oc=AdmsfAYqsqrMRM7Mg_veuBEVaVErhL9kx-MXXxHPyl898B2qtJfBPFFG6y74PfG0r1k&_nc_zt=23&_nc_ht=scontent.fcgy2-1.fna&_nc_gid=m6kKix5PkVRKvVkUvBXgzw&oh=00_AfLqQIXoC8-azlkm2eHcXWzAVd6KBRrd69Y20Duk9qPFUw&oe=6832D147',
-    author: 'John Smith',
-  },
-  {
-    id: '3',
-    title: 'Champions League Final: Underdogs Triumph in Thrilling Match',
-    content: 'In a stunning upset, FC Dynamos defeated the reigning champions, Real Strikers, in a nail-biting Champions League final. The match, which went into extra time, was decided by a last-minute goal from Dynamos\' star striker. Fans erupted in celebration as the underdog team lifted the coveted trophy for the first time in their history. The game was marked by dramatic twists and turns, including a controversial red card and a saved penalty. Analysts are praising the tactical genius of the Dynamos coach and the resilience of their players. The victorious team is expected to receive a heroes\' welcome upon their return home.',
-    sourceName: 'ced Today',
-    sourceUrl: 'https://example.com/ced-news-1',
-    publishedDate: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
-    category: 'ced',
-    imageUrl: 'https://placehold.co/600x400.png',
-    author: 'Mike Johnson',
-  },
-  {
-    id: '4',
-    title: 'Market Volatility Continues Amid Economic Uncertainty',
-    content: 'Stock markets experienced another turbulent day of trading as investors grapple with ongoing economic uncertainty. Key indices saw significant fluctuations, driven by mixed corporate earnings reports and concerns about inflation. Central banks are under pressure to address rising prices without derailing economic recovery. Financial analysts advise caution, suggesting that volatility may persist in the short term. Several sectors, including energy and commodities, saw gains, while csm and consumer discretionary stocks faced downward pressure. The upcoming release of employment data is eagerly awaited by market participants for further clues on the economic outlook.',
-    sourceName: 'Financial Times',
-    sourceUrl: 'https://example.com/ceba-news-1',
-    publishedDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
-    category: 'ceba',
-    imageUrl: 'https://placehold.co/600x400.png',
-    author: 'Sarah Lee',
-  },
-  {
-    id: '5',
-    title: 'New AI Model Achieves Human-Level Text Generation',
-    content: 'Researchers have announced a breakthrough in artificial intelligence with a new language model capable of generating text indistinguishable from human writing. The model, named "ScribeX," demonstrates remarkable coherence, creativity, and contextual understanding. Potential applications range from automated content creation to advanced chatbots and translation services. However, the development also raises ethical concerns about misuse, such as generating fake news or impersonation. The research team emphasizes the importance of responsible AI development and deployment. ScribeX was trained on an unprecedentedly large dataset of text and code, requiring immense computational resources.',
-    sourceName: 'AI Insights',
-    sourceUrl: 'https://example.com/tech-news-2',
-    publishedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
-    category: 'csm',
-    imageUrl: 'https://placehold.co/600x400.png',
-    author: 'David Kim',
-    isFeatured: true,
-  },
-  {
-    id: '6',
-    title: 'Local Elections See Record Turnout',
-    content: 'Yesterday\'s local elections saw a record voter turnout, signaling high civic engagement. The results are expected to bring significant changes to local governance in several key districts. Close races are still being counted, with final outcomes anticipated by tomorrow morning. Political analysts attribute the increased participation to heightened awareness of local issues and effective get-out-the-vote campaigns. Both major parties are claiming partial victories based on preliminary results. The election process was reported to be smooth, with minimal disruptions.',
-    sourceName: 'City Herald',
-    sourceUrl: 'https://example.com/coet-news-2',
-    publishedDate: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString(), // 10 hours ago
-    category: 'coet',
-    imageUrl: 'https://placehold.co/600x400.png',
-    author: 'Emily Carter',
-  },
-   {
-    id: '7',
-    title: 'The Future of Remote Work: A Hybrid Approach',
-    content: 'A new study indicates that a hybrid model, combining remote and in-office work, is becoming the preferred approach for many companies and employees post-pandemic. The report highlights benefits such as increased flexibility, improved work-life balance, and access to a wider talent pool. However, challenges remain in areas like team cohesion, equitable opportunities for remote workers, and cybersecurity. Companies are experimenting with various hybrid structures to find what works best for their specific needs and culture. The study surveyed over 500 organizations across different industries.',
-    sourceName: 'Workplace Trends',
-    sourceUrl: 'https://example.com/ceba-news-2',
-    publishedDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(), // 4 days ago
-    category: 'ceba',
-    imageUrl: 'https://placehold.co/600x400.png',
-    author: 'Chris Williams',
-  },
-  {
-    id: '8',
-    title: 'SpaceX Launches New Batch of Starlink Satellites',
-    content: 'SpaceX successfully launched another Falcon 9 rocket carrying a new batch of Starlink satellites into orbit. This mission further expands the company\'s ambitious satellite internet constellation, aiming to provide high-speed internet access to underserved areas globally. The launch and booster landing were executed flawlessly, marking another milestone for the private space exploration company. The Starlink network now comprises over two thousand active satellites. While praised for its technological achievement, the project has also drawn criticism from astronomers concerned about light pollution and space debris.',
-    sourceName: 'SpaceTech Now',
-    sourceUrl: 'https://example.com/tech-news-3',
-    publishedDate: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString(), // 20 hours ago
-    category: 'csm',
-    imageUrl: 'https://placehold.co/600x400.png',
-    author: 'Olivia Brown',
-  }
-];
+async function getArticlesFromDB(): Promise<Article[]> {
+  const connection = await mysql.createConnection(DB_CONFIG);
+
+  const [rows] = await connection.execute(`
+    SELECT id, title, description AS content, image AS imageUrl, link AS sourceUrl, pubDate, tag AS category, sourceName, author, summary
+    FROM rss_posts
+    ORDER BY pubDate DESC
+    LIMIT 20
+  `);
+
+  await connection.end();
+
+  return (rows as any[]).map((row, index) => ({
+    id: row.id.toString(),
+    title: row.title,
+    content: row.content,
+    sourceName: row.sourceName,
+    sourceUrl: row.sourceUrl,
+    publishedDate: new Date(row.pubDate).toISOString(),
+    category: row.category,
+    imageUrl: row.imageUrl ?? '',
+    summary: row.summary ?? undefined,
+    author: row.author ?? undefined,
+    isFeatured: index < 3,  // Example: first 3 articles featured
+  }));
+}

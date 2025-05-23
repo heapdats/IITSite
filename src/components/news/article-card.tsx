@@ -20,7 +20,7 @@ export function ArticleCard({ article, onReadMore }: ArticleCardProps) {
   return (
     <Card
       className={cn(
-        "flex flex-col overflow-hidden h-full",
+        "flex flex-col overflow-hidden h-[80vh] max-h-screen",
         article.isFeatured &&
           "ring-2 ring-primary ring-offset-background ring-offset-2 shadow-2xl dark:ring-offset-card"
       )}
