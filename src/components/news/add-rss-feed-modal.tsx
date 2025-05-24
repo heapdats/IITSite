@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import { useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import {
   Dialog,
   DialogContent,
@@ -11,12 +11,12 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from 'lucide-react';
+import { Loader2 } from "lucide-react";
 
 const rssFeedSchema = z.object({
   name: z.string().min(1, "Feed name is required"),
@@ -29,10 +29,9 @@ type RssFeedFormData = z.infer<typeof rssFeedSchema>;
 interface AddRssFeedModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onFeedAdd: (data: RssFeedFormData) => Promise<void>; // Simulate adding
 }
 
-export function AddRssFeedModal({ isOpen, onClose, onFeedAdd }: AddRssFeedModalProps) {
+export function AddRssFeedModal({ isOpen, onClose }: AddRssFeedModalProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -46,34 +45,76 @@ export function AddRssFeedModal({ isOpen, onClose, onFeedAdd }: AddRssFeedModalP
   });
 
   const onSubmit: SubmitHandler<RssFeedFormData> = async (data) => {
-    setIsSubmitting(true);
-    try {
-      // Simulate API call
-      await onFeedAdd(data); 
-      toast({
-        title: "RSS Feed Added",
-        description: `"${data.name}" has been successfully added (simulated).`,
-      });
-      reset();
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to add RSS feed. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
+  setIsSubmitting(true);
+
+  try {
+    // Step 1: Add RSS feed
+    const response = await fetch('/api/addRss', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Failed to add feed");
     }
-  };
+
+    // Step 2: Process RSS feeds (fetch & insert into DB)
+    const processResponse = await fetch('/api/processFeed', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    if (!processResponse.ok) {
+      const errorData = await processResponse.json();
+      throw new Error(errorData.error || "Failed to process feeds");
+    }
+
+    // Step 3: Generate static articles from DB data
+    const generateResponse = await fetch('/api/generateArticle', {
+      method: 'POST',
+    });
+
+    if (!generateResponse.ok) {
+      const errorData = await generateResponse.json();
+      throw new Error(errorData.error || "Failed to generate articles");
+    }
+
+    toast({
+      title: "RSS Feed Added and Processed",
+      description: `"${data.name}" has been successfully added, processed, and static articles updated.`,
+    });
+
+    reset();
+    onClose();
+  } catch (error: any) {
+    toast({
+      title: "Error",
+      description: error.message || "Failed to add RSS feed. Please try again.",
+      variant: "destructive",
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) { reset(); onClose(); }}}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          reset();
+          onClose();
+        }
+      }}
+    >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add New RSS Feed</DialogTitle>
           <DialogDescription>
-            Enter the details of the RSS feed you want to add. This feature is currently simulated.
+            Enter the details of the RSS feed you want to add.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
@@ -82,8 +123,16 @@ export function AddRssFeedModal({ isOpen, onClose, onFeedAdd }: AddRssFeedModalP
               Author
             </Label>
             <div className="col-span-3">
-              <Input id="name" {...register("name")} className={errors.name ? "border-destructive" : ""} />
-              {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
+              <Input
+                id="name"
+                {...register("name")}
+                className={errors.name ? "border-destructive" : ""}
+              />
+              {errors.name && (
+                <p className="text-xs text-destructive mt-1">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -92,8 +141,16 @@ export function AddRssFeedModal({ isOpen, onClose, onFeedAdd }: AddRssFeedModalP
               Tag
             </Label>
             <div className="col-span-3">
-              <Input id="tag" {...register("tag")} className={errors.tag ? "border-destructive" : ""} />
-              {errors.tag && <p className="text-xs text-destructive mt-1">{errors.tag.message}</p>}
+              <Input
+                id="tag"
+                {...register("tag")}
+                className={errors.tag ? "border-destructive" : ""}
+              />
+              {errors.tag && (
+                <p className="text-xs text-destructive mt-1">
+                  {errors.tag.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -102,17 +159,40 @@ export function AddRssFeedModal({ isOpen, onClose, onFeedAdd }: AddRssFeedModalP
               URL
             </Label>
             <div className="col-span-3">
-              <Input id="url" {...register("url")} placeholder="https://example.com/feed.xml" className={errors.url ? "border-destructive" : ""} />
-              {errors.url && <p className="text-xs text-destructive mt-1">{errors.url.message}</p>}
+              <Input
+                id="url"
+                {...register("url")}
+                placeholder="https://example.com/feed.xml"
+                className={errors.url ? "border-destructive" : ""}
+              />
+              {errors.url && (
+                <p className="text-xs text-destructive mt-1">
+                  {errors.url.message}
+                </p>
+              )}
             </div>
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => { reset(); onClose(); }} disabled={isSubmitting}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                reset();
+                onClose();
+              }}
+              disabled={isSubmitting}
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting} className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              {isSubmitting ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : null}
               Add Feed
             </Button>
           </DialogFooter>

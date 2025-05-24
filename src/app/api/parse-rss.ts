@@ -2,13 +2,13 @@ import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import mysql from 'mysql2/promise';
 
-const FEEDS = [
-  { url: 'https://rss.app/feeds/cfWqYLRJ0yaAuHWo.xml', tag: 'coe', sourceName:"The Thu'um Publication" },
-  { url: 'https://rss.app/feeds/JJlhxOrDD6vWD3TL.xml', tag: 'csm', sourceName:'Ad Infinitum' },
-  { url: 'https://rss.app/feeds/nmLQY9LltbmMfVyj.xml', tag: 'css', sourceName:'CASSayuran IIT' },
-  { url: 'https://rss.app/feeds/qUMEZ7moBZJhG5eW.xml', tag: 'ccs', sourceName:'The Motherboard' },
-  // add more feeds here with their 3-char tag
-];
+import fs from 'fs/promises';
+const FEED_FILE_PATH = 'src/app/api/feeds.json';
+
+async function getFeeds() {
+  const data = await fs.readFile(FEED_FILE_PATH, 'utf-8');
+  return JSON.parse(data);
+}
 
 const DB_CONFIG = {
   host: 'localhost',
@@ -56,7 +56,9 @@ async function insertPostToDB(
 async function main() {
   const connection = await mysql.createConnection(DB_CONFIG);
 
-  for (const feed of FEEDS) {
+  const feeds = await getFeeds(); // <-- dynamically read from feeds.json
+
+  for (const feed of feeds) {
     const items = await fetchRSSData(feed.url);
 
     for (const item of items) {
@@ -67,5 +69,6 @@ async function main() {
   console.log('All RSS feeds processed and inserted into the database.');
   await connection.end();
 }
+
 
 main().catch(console.error);
