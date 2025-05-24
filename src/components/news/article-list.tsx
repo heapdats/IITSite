@@ -3,7 +3,10 @@ import { ArticleCard } from './article-card';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+<<<<<<< HEAD
 import { a } from 'genkit/lib/index-oOKwwZT5';
+=======
+>>>>>>> 631a0da82fb7f7f3983885a7ef42e897e325a10a
 
 interface ArticleListProps {
   articles: Article[];
@@ -25,13 +28,20 @@ export function ArticleList({ articles, onReadMore }: ArticleListProps) {
   const sliderSettings = {
     dots: true,
     infinite: true,
+<<<<<<< HEAD
     speed: 1300,
+=======
+    speed: 500,
+>>>>>>> 631a0da82fb7f7f3983885a7ef42e897e325a10a
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
     adaptiveHeight: true,
+<<<<<<< HEAD
     autoplay: true,
     autoplaySpeed: 5000,
+=======
+>>>>>>> 631a0da82fb7f7f3983885a7ef42e897e325a10a
 };
 
   return (
