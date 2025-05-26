@@ -68,23 +68,22 @@ export default function NewsPage() {
 
   if (!hydrated) {
     return (
-      <div className="flex flex-col min-h-screen bg-background">
+      <div className="flex flex-col h-screen overflow-hidden bg-background">
         <Header onAddFeedClick={() => {}} />
-        <main className="container mx-auto px-4 py-6 flex-grow">
-          <div className="text-center py-10 text-muted-foreground">Loading news...</div>
+        <main className="flex-grow flex items-center justify-center">
+          <div className="text-center text-muted-foreground">Loading news...</div>
         </main>
-        <footer className="bg-card text-center p-4 text-sm text-muted-foreground border-t">
-          © {new Date().getFullYear()} NOWIIT. All rights reserved.
-        </footer>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col h-screen overflow-hidden bg-background">
       <Header onAddFeedClick={handleAddFeedClick} />
-      <main className="container mx-auto px-4 py-4 flex-grow">
-        <div className="flex flex-wrap justify-between items-start gap-4">
+
+      <main className="flex flex-col flex-grow overflow-hidden container mx-auto px-4 pt-2">
+        {/* Controls */}
+        <div className="flex flex-wrap justify-between items-start gap-4 pb-2">
           <div className="flex-1 min-w-0">
             <CategoryFilter
               categories={mockCategories}
@@ -94,7 +93,7 @@ export default function NewsPage() {
           </div>
 
           <Select value={sortOrder} onValueChange={(value: 'recency' | 'title') => setSortOrder(value)}>
-            <SelectTrigger className="w-[175px] h-[60]">
+            <SelectTrigger className="w-[175px]">
               <ArrowDownUp className="h-4 w-4 mr-2 text-muted-foreground" />
               <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
@@ -115,7 +114,10 @@ export default function NewsPage() {
           </Select>
         </div>
 
-        <ArticleList articles={filteredArticles} onReadMore={handleReadMore} />
+        {/* Article List fills the remaining space */}
+        <div className="flex-grow overflow-hidden">
+          <ArticleList articles={filteredArticles} onReadMore={handleReadMore} />
+        </div>
       </main>
 
       <ArticleDetailModal
