@@ -19,10 +19,21 @@ async function getFeeds() {
 }
 
 async function fetchRSSData(url: string) {
-  const res = await axios.get(url);
+  try {
+    const res = await axios.get(url, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+        'Accept': 'application/rss+xml, application/xml;q=0.9, */*;q=0.8'
+      }
+    });
   const parser = new XMLParser({ ignoreAttributes: false });
   const parsed = parser.parse(res.data);
   return parsed.rss.channel.item || [];
+  } catch (err: any) {
+    console.error(`Failed to fetch RSS feed from ${url}:`, err.response?.status || err.message);
+    return [];
+  }
 }
 
 async function insertPostToDB(
