@@ -1,9 +1,9 @@
 import type { Article } from '@/types';
 import { ArticleCard } from './article-card';
+import { FeaturedArticleCard } from './featured-article-card';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { a } from 'genkit/lib/index-oOKwwZT5';
 
 interface ArticleListProps {
   articles: Article[];
@@ -32,30 +32,29 @@ export function ArticleList({ articles, onReadMore }: ArticleListProps) {
     adaptiveHeight: true,
     autoplay: true,
     autoplaySpeed: 5000,
-};
+  };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 h-[80vh] p-4">
+    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 px-4 pt-2 pb-2 h-[calc(100vh-130px)]">
       {/* Left Column: Carousel for featured articles */}
-      <div className="h-[80vh] min-w-0">
-  {featuredArticles.length > 0 ? (
-    <Slider {...sliderSettings}>
-      {featuredArticles.map((article) => (
-        <div key={article.id} className="px-2 flex w-full">
-          <ArticleCard article={article} onReadMore={onReadMore} />
-        </div>
-      ))}
-    </Slider>
-  ) : (
-    <p className="text-center text-muted-foreground py-8">
-      No featured articles.
-    </p>
-  )}
-</div>
-
+      <div className="min-w-0 overflow-hidden">
+        {featuredArticles.length > 0 ? (
+          <Slider {...sliderSettings}>
+            {featuredArticles.map((article) => (
+              <div key={article.id} className="px-1 flex w-full">
+                <FeaturedArticleCard article={article} onReadMore={onReadMore} />
+              </div>
+            ))}
+          </Slider>
+        ) : (
+          <p className="text-center text-muted-foreground py-8">
+            No featured articles.
+          </p>
+        )}
+      </div>
 
       {/* Right Column: All non-featured articles */}
-      <div className="overflow-y-auto space-y-4 pr-2 h-[80vh]">
+      <div className="overflow-y-auto pr-2 space-y-4 h-[calc(91vh-130px)]">
         {otherArticles.length > 0 ? (
           otherArticles.map((article) => (
             <ArticleCard key={article.id} article={article} onReadMore={onReadMore} />

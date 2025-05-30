@@ -10,7 +10,6 @@ export function Header({ onAddFeedClick }: HeaderProps) {
     <header className="bg-card shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Newspaper className="h-8 w-8 text-primary" />
           <img
             src="\images\nowiit.png"
             alt="NOWIIT"

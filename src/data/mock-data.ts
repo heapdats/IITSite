@@ -1,16 +1,15 @@
-import type { Article, Category } from '@/types';
-import { Landmark, Cpu, Trophy, Briefcase, Globe, Cog } from 'lucide-react';
-
+import type { Category } from '@/types';
+import { Globe } from 'lucide-react';
 
 export const categories: Category[] = [
   { id: 'all', name: 'All', icon: Globe },
-  { id: 'coe', name: 'Engineering', icon: Cog },
-  { id: 'csm', name: 'Science and Mathematics', icon: Cpu },
-  { id: 'ced', name: 'Education', icon: Landmark },
-  { id: 'cba', name: 'Economics, Business and Accountancy', icon: Briefcase },
-  { id: 'ccs', name: 'Computer Science', icon: Cog },
-  { id: 'css', name: 'Arts and Social Science', icon: Cog },
-  { id: 'chs', name: 'Health Science', icon: Cog },
+  { id: 'coe', name: 'The Thuum Publication', imageIcon: '/images/icons/COE.ico' },
+  { id: 'csm', name: 'Ad Infinitum', imageIcon: '/images/icons/CSM.ico' },
+  { id: 'ced', name: 'Sidlak', imageIcon: '/images/icons/CED.ico' },
+  { id: 'cba', name: 'Sindaw', imageIcon: '/images/icons/CEBA.ico' },
+  { id: 'ccs', name: 'The Motherboard', imageIcon: '/images/icons/CCS.ico' },
+  { id: 'cass', name: 'CASSayuran', imageIcon: '/images/icons/CASS.ico' },
+  { id: 'chs', name: 'Caduceus', imageIcon: '/images/icons/CHS.ico' },
 ];
 
 

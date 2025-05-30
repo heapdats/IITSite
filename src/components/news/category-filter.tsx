@@ -14,7 +14,7 @@ export function CategoryFilter({ categories, selectedCategory, onSelectCategory 
   const [isOpen, setIsOpen] = useState(false); // Hidden by default
 
   return (
-    <div className="p-2 bg-card rounded-lg shadow mb-3">
+    <div className="p-1 bg-card rounded-lg shadow mb-2">
       <div className="flex justify-between items-center mb-2">
         <Button
           variant="ghost"
@@ -49,7 +49,15 @@ export function CategoryFilter({ categories, selectedCategory, onSelectCategory 
               )}
               aria-pressed={selectedCategory === category.id}
             >
-              {category.icon && <category.icon className="h-4 w-4" />}
+              {category.icon ? (
+                <category.icon className="h-4 w-4" />
+              ) : category.imageIcon ? (
+                <img
+                  src={category.imageIcon}
+                  alt={category.name}
+                  className="h-6 w-6 object-contain"
+                />
+              ) : null}
               {category.name}
             </Button>
           ))}

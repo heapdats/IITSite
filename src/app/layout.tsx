@@ -9,7 +9,7 @@ const geistSans = GeistSans;
 const geistMono = GeistMono;
 
 export const metadata: Metadata = {
-  title: 'IIT Pedia',
+  title: 'NowIIT',
   description: 'Your daily dose of news, summarized.',
 };
 
